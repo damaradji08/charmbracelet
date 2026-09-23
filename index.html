@@ -3,737 +3,1928 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHARMÉ — Luxury Italian Charm Bracelets</title>
-    <!-- Tailwind CSS CDN -->
+    <title>CHARMÉ — Italian Charm Bracelets | Your Bracelet, Your Story</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        charmeCream: '#F9F6F0',
-                        charmeDark: '#1E1B18',
-                        charmeGold: '#C5A880',
-                        charmeRose: '#D4B5B0',
-                        charmeWarmGray: '#EFECE6'
+                        ivory: '#FFF9F0',
+                        blush: '#E8C7C8',
+                        dustyRose: '#C98F96',
+                        deepCocoa: '#4A3635',
+                        champagne: '#C9A96E',
+                        warmTaupe: '#A58F89',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif']
+                        serif: ['"DM Serif Display"', 'serif'],
+                        sans: ['"DM Sans"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -5px rgba(74, 54, 53, 0.05)',
+                        'gold': '0 4px 20px -2px rgba(201, 169, 110, 0.2)',
                     }
                 }
             }
         }
     </script>
-    <!-- Google Fonts: Playfair Display & Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F9F6F0; color: #1E1B18; }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        /* Custom scrollbar for charm bracelet preview */
-        .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #EFECE6; border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #C5A880; border-radius: 4px; }
+        body {
+            background-color: #FFF9F0;
+            color: #4A3635;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF9F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E8C7C8;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C98F96;
+        }
+
+        /* Gold accent subtle glow */
+        .gold-border {
+            border: 1px solid rgba(201, 169, 110, 0.35);
+        }
+        .gold-border-focus:focus {
+            border-color: #C9A96E;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.2);
+        }
+
+        /* Shimmer effect for limited tags */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-badge {
+            background: linear-gradient(90deg, #C9A96E 0%, #FFF9F0 50%, #C9A96E 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+        }
+
+        .view-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .view-section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Italian Charm link visual styles */
+        .charm-slot {
+            transition: all 0.2s ease;
+        }
+        .charm-slot:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
-<body class="antialiased selection:bg-charmeGold selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-blush selection:text-deepCocoa">
 
-    <header class="sticky top-0 z-50 bg-[#F9F6F0]/90 backdrop-blur-md border-b border-[#EFECE6]">
+    <!-- Top Announcement Bar -->
+    <div class="bg-deepCocoa text-ivory text-xs py-2 px-4 text-center font-medium tracking-wide flex justify-center items-center gap-2">
+        <span>✨ Gratis Ongkir seluruh Indonesia min. belanja Rp 150.000 dengan kode: <strong class="text-champagne underline">CHARMESTORY</strong></span>
+    </div>
+
+    <!-- Desktop & Mobile Header / Global Navbar -->
+    <header class="sticky top-0 z-40 bg-ivory/90 backdrop-blur-md border-b border-blush/40 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="#" class="text-2xl sm:text-3xl font-serif font-bold tracking-widest text-charmeDark flex items-center gap-2">
-                CHARMÉ <span class="text-xs tracking-normal font-sans font-normal uppercase px-2 py-0.5 bg-charmeGold/20 text-charmeDark rounded-full">Italia</span>
+            
+            <!-- Logo -->
+            <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center gap-2 group">
+                <span class="font-serif text-3xl tracking-wider text-deepCocoa group-hover:text-dustyRose transition-colors">CHARMÉ</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-champagne"></span>
             </a>
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-stone-700">
-                <a href="#home" class="hover:text-charmeGold transition">Beranda</a>
-                <a href="#builder" class="hover:text-charmeGold transition text-charmeGold font-semibold">Buat Gelangmu</a>
-                <a href="#collections" class="hover:text-charmeGold transition">Koleksi</a>
-                <a href="#about" class="hover:text-charmeGold transition">Filosofi</a>
-                <a href="#reviews" class="hover:text-charmeGold transition">Ulasan</a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-deepCocoa">
+                <a href="#" onclick="navigateTo('home'); return false;" class="nav-link hover:text-dustyRose transition-colors">Home</a>
+                <a href="#" onclick="navigateTo('shop'); return false;" class="nav-link hover:text-dustyRose transition-colors">Shop</a>
+                <a href="#" onclick="navigateTo('collections'); return false;" class="nav-link hover:text-dustyRose transition-colors">Collections</a>
+                <a href="#" onclick="navigateTo('about'); return false;" class="nav-link hover:text-dustyRose transition-colors">About Us</a>
             </nav>
-            <div class="flex items-center gap-4">
-                <button onclick="toggleCart()" class="relative p-2.5 rounded-full bg-white border border-[#EFECE6] text-stone-800 hover:text-charmeGold hover:border-charmeGold transition shadow-sm" aria-label="Buka Keranjang">
-                    <i class="fa-solid fa-bag-shopping text-lg"></i>
-                    <span id="cart-count" class="absolute -top-1 -right-1 bg-charmeDark text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+
+            <!-- Action CTAs -->
+            <div class="flex items-center space-x-4">
+                <!-- Highlighted Builder CTA -->
+                <button onclick="navigateTo('builder')" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-sm hover:shadow-md">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-2 text-champagne"></i> Build Your Bracelet
                 </button>
-                <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-full bg-white border border-[#EFECE6] text-stone-800 hover:text-charmeGold transition" aria-label="Menu">
-                    <i class="fa-solid fa-bars text-lg"></i>
+
+                <!-- Cart Icon with Live Badge -->
+                <button onclick="toggleCartDrawer(true)" class="relative p-2.5 rounded-full text-deepCocoa hover:bg-blush/30 transition-colors" aria-label="View Cart">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cart-badge" class="absolute top-1 right-1 bg-dustyRose text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-ivory hidden">0</span>
+                </button>
+
+                <!-- Mobile Hamburger Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-deepCocoa hover:text-dustyRose focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
-        <!-- Mobile Navigation Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-stone-200 px-6 py-4 space-y-3 shadow-lg">
-            <a href="#home" onclick="toggleMobileMenu()" class="block text-stone-800 hover:text-charmeGold font-medium py-1">Beranda</a>
-            <a href="#builder" onclick="toggleMobileMenu()" class="block text-charmeGold font-semibold py-1">Buat Gelangmu (Custom)</a>
-            <a href="#collections" onclick="toggleMobileMenu()" class="block text-stone-800 hover:text-charmeGold font-medium py-1">Koleksi</a>
-            <a href="#about" onclick="toggleMobileMenu()" class="block text-stone-800 hover:text-charmeGold font-medium py-1">Filosofi</a>
-            <a href="#reviews" onclick="toggleMobileMenu()" class="block text-stone-800 hover:text-charmeGold font-medium py-1">Ulasan</a>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-ivory border-b border-blush/40 px-4 pt-2 pb-6 space-y-3">
+            <a href="#" onclick="navigateTo('home'); toggleMobileMenu(); return false;" class="block py-2 text-base font-medium text-deepCocoa hover:text-dustyRose">Home</a>
+            <a href="#" onclick="navigateTo('shop'); toggleMobileMenu(); return false;" class="block py-2 text-base font-medium text-deepCocoa hover:text-dustyRose">Shop All Products</a>
+            <a href="#" onclick="navigateTo('builder'); toggleMobileMenu(); return false;" class="block py-2 text-base font-medium text-dustyRose font-bold">✨ Build Your Bracelet</a>
+            <a href="#" onclick="navigateTo('collections'); toggleMobileMenu(); return false;" class="block py-2 text-base font-medium text-deepCocoa hover:text-dustyRose">Collections</a>
+            <a href="#" onclick="navigateTo('about'); toggleMobileMenu(); return false;" class="block py-2 text-base font-medium text-deepCocoa hover:text-dustyRose">About Our Story</a>
         </div>
     </header>
 
-    <section id="home" class="relative overflow-hidden py-16 md:py-28 bg-gradient-to-b from-[#EFECE6] to-[#F9F6F0]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6 text-center md:text-left">
-                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-charmeGold/15 text-charmeDark text-xs font-semibold tracking-widest uppercase">
-                    <i class="fa-solid fa-gem text-charmeGold"></span> Authentic Italian Modular Links
-                </span>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-charmeDark leading-tight">
-                    Tulis Kisah Hidupmu di Pergelangan Tangan
-                </h1>
-                <p class="text-stone-600 text-base sm:text-lg max-w-lg mx-auto md:mx-0 leading-relaxed">
-                    Gelang modular stainless steel asal Italia berkualitas tinggi. Gabungkan link demi link untuk menciptakan karya seni personal yang abadi.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
-                    <a href="#builder" class="px-8 py-4 rounded-full bg-charmeDark text-white font-medium hover:bg-charmeGold transition duration-300 shadow-xl shadow-charmeDark/10 text-center tracking-wide">
-                        Mulai Rancang Gelangmu
-                    </a>
-                    <a href="#collections" class="px-8 py-4 rounded-full border border-stone-300 text-stone-800 font-medium hover:border-charmeGold hover:text-charmeGold transition text-center tracking-wide">
-                        Jelajahi Koleksi
-                    </a>
-                </div>
-            </div>
-            <div class="relative flex justify-center">
-                <div class="relative w-80 h-[450px] sm:w-96 sm:h-[500px] rounded-3xl overflow-hidden shadow-2xl border-8 border-white bg-white">
-                    <img src="https://images.unsplash.com/photo-1611591475283-9b43d2c12574?auto=format&fit=crop&w=800&q=80" alt="Italian Charm Bracelet" class="w-full h-full object-cover transform hover:scale-105 transition duration-700" onerror="this.src='https://placehold.co/600x800/e8ded2/57534e?text=Charme+Bracelet'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-8">
-                        <div class="text-white space-y-1">
-                            <p class="text-xs uppercase tracking-widest text-charmeGold font-semibold">Signature Masterpiece</p>
-                            <h3 class="text-2xl font-serif font-bold">The Milano Gold Link</h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- Floating badge -->
-                <div class="absolute -bottom-6 -left-6 bg-white p-5 rounded-2xl shadow-xl border border-stone-100 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-charmeGold/15 flex items-center justify-center text-charmeGold text-xl font-bold">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs text-stone-500 font-medium">Garansi Mutu</p>
-                        <p class="text-sm font-bold text-charmeDark">Stainless Steel Anti Karat & Tahan Air</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- MAIN CONTENT CONTAINER WITH SPA VIEWS -->
+    <main class="flex-grow">
 
-    <section id="builder" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
-            <span class="text-xs uppercase tracking-widest text-charmeGold font-semibold">Interactive Studio</span>
-            <h2 class="text-3xl sm:text-4xl font-serif font-bold text-charmeDark">Rancang Gelang Custom-mu</h2>
-            <p class="text-stone-600 text-sm sm:text-base">Pilih ukuran dasar gelang, lalu klik charm favorit di bawah untuk langsung merangkai kombinasi unikmu secara real-time.</p>
-        </div>
-
-        <!-- Builder Interactive Workspace Container -->
-        <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-[#EFECE6] grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- ========================================== -->
+        <!-- 1. HOME VIEW -->
+        <!-- ========================================== -->
+        <section id="view-home" class="view-section active">
             
-            <!-- Left Column: Live Preview Tray -->
-            <div class="lg:col-span-5 bg-[#F9F6F0] p-6 rounded-2xl border border-[#EFECE6] flex flex-col justify-between space-y-6">
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-serif font-bold text-lg text-charmeDark">Preview Gelang</h3>
-                        <span id="link-counter" class="text-xs font-semibold px-3 py-1 bg-white rounded-full border border-stone-200">0 Charm Dipilih</span>
-                    </div>
+            <!-- Hero Section -->
+            <div class="relative overflow-hidden pt-12 pb-20 md:py-24 bg-gradient-to-b from-ivory via-blush/20 to-ivory">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6 text-center md:text-left">
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-deepCocoa bg-blush/50 gold-border">
+                                ✨ Indonesian Custom Jewelry Brand
+                            </span>
+                            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-deepCocoa leading-tight">
+                                YOUR BRACELET,<br><span class="italic font-normal text-dustyRose">YOUR STORY.</span>
+                            </h1>
+                            <p class="text-warmTaupe text-base sm:text-lg max-w-lg mx-auto md:mx-0 leading-relaxed">
+                                Create a custom Italian charm bracelet that captures your unique personality, favorite memories, relationships, and little everyday moments.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
+                                <button onclick="navigateTo('builder')" class="px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> Build Your Bracelet
+                                </button>
+                                <button onclick="navigateTo('shop')" class="px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider bg-transparent text-deepCocoa border border-deepCocoa/30 hover:border-dustyRose hover:text-dustyRose transition-all">
+                                    Shop Collection
+                                </button>
+                            </div>
+                        </div>
 
-                    <!-- Visual Tray for Bracelet Links -->
-                    <div id="bracelet-tray" class="min-h-[160px] bg-white rounded-xl border border-dashed border-stone-300 p-4 flex items-center overflow-x-auto gap-2 custom-scrollbar shadow-inner">
-                        <div id="empty-tray-msg" class="text-stone-400 text-xs italic m-auto text-center w-full py-8">
-                            Gelangmu masih kosong.<br>Pilih charm di sebelah kanan untuk mulai merangkai!
+                        <!-- Hero Visual Banner -->
+                        <div class="relative flex justify-center">
+                            <div class="relative w-full max-w-md bg-white/70 backdrop-blur p-6 rounded-3xl gold-border shadow-soft text-center space-y-6">
+                                <div class="p-4 bg-ivory rounded-2xl border border-blush/50">
+                                    <p class="text-xs font-medium uppercase tracking-widest text-warmTaupe mb-3">Live Interactive Preview</p>
+                                    
+                                    <!-- Visual Modular Italian Charm Graphic -->
+                                    <div class="flex justify-center items-center gap-1.5 py-6 overflow-x-auto">
+                                        <!-- Plain Links and Attached Charm Links -->
+                                        <div class="w-10 h-12 bg-gradient-to-b from-gray-200 to-gray-300 rounded border border-gray-400 flex items-center justify-center text-xs shadow-inner">🔗</div>
+                                        <div class="w-10 h-12 bg-gradient-to-b from-blush to-dustyRose text-white font-bold rounded border border-dustyRose flex items-center justify-center text-sm shadow">💗</div>
+                                        <div class="w-10 h-12 bg-gradient-to-b from-gray-200 to-gray-300 rounded border border-gray-400 flex items-center justify-center text-xs shadow-inner">🔗</div>
+                                        <div class="w-10 h-12 bg-gradient-to-b from-champagne to-yellow-600 text-white font-bold rounded border border-champagne flex items-center justify-center text-sm shadow">✨</div>
+                                        <div class="w-10 h-12 bg-gradient-to-b from-blush to-dustyRose text-white font-bold rounded border border-dustyRose flex items-center justify-center text-sm shadow">🎀</div>
+                                        <div class="w-10 h-12 bg-gradient-to-b from-gray-200 to-gray-300 rounded border border-gray-400 flex items-center justify-center text-xs shadow-inner">🔗</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-deepCocoa font-medium">
+                                    <span>CHARMÉ Custom Set</span>
+                                    <span class="font-bold text-dustyRose">Rp 85.000</span>
+                                </div>
+                                <div class="text-[11px] text-warmTaupe italic">
+                                    "Modular 316L Stainless Steel links — swap and rearrange anytime."
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="space-y-4 pt-4 border-t border-stone-200">
-                    <div class="flex justify-between items-center text-sm">
-                        <span class="text-stone-600">Base Gelang (18 Links):</span>
-                        <span class="font-semibold text-charmeDark">Rp 150.000 (Included)</span>
+            <!-- Why CHARMÉ Section -->
+            <div class="py-16 bg-ivory">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <h2 class="font-serif text-3xl sm:text-4xl text-deepCocoa">Why Choose CHARMÉ?</h2>
+                        <p class="text-warmTaupe mt-2 text-sm">Jewelry designed to feel personal rather than generic.</p>
                     </div>
-                    <div class="flex justify-between items-center text-sm">
-                        <span class="text-stone-600">Total Harga Charm:</span>
-                        <span id="builder-charms-total" class="font-semibold text-charmeDark">Rp 0</span>
+
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Card 1 -->
+                        <div class="bg-white p-6 rounded-2xl gold-border shadow-soft text-center space-y-3 hover:-translate-y-1 transition-transform">
+                            <div class="w-12 h-12 mx-auto rounded-full bg-blush/40 text-dustyRose flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-fingerprint"></i>
+                            </div>
+                            <h3 class="font-serif text-lg text-deepCocoa">Personalized</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Made to feel 100% like you. Every single charm choice is intentional.</p>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="bg-white p-6 rounded-2xl gold-border shadow-soft text-center space-y-3 hover:-translate-y-1 transition-transform">
+                            <div class="w-12 h-12 mx-auto rounded-full bg-blush/40 text-dustyRose flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <h3 class="font-serif text-lg text-deepCocoa">Meaningful</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Carry your milestones, inside jokes, and favorite memories with you everywhere.</p>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="bg-white p-6 rounded-2xl gold-border shadow-soft text-center space-y-3 hover:-translate-y-1 transition-transform">
+                            <div class="w-12 h-12 mx-auto rounded-full bg-blush/40 text-dustyRose flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+                            <h3 class="font-serif text-lg text-deepCocoa">Collectible</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Easily snap on new charms over time as your life story continues to grow.</p>
+                        </div>
+                        <!-- Card 4 -->
+                        <div class="bg-white p-6 rounded-2xl gold-border shadow-soft text-center space-y-3 hover:-translate-y-1 transition-transform">
+                            <div class="w-12 h-12 mx-auto rounded-full bg-blush/40 text-dustyRose flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-tags"></i>
+                            </div>
+                            <h3 class="font-serif text-lg text-deepCocoa">Affordable</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">High quality 316L stainless steel self-expression without luxury price tags.</p>
+                        </div>
                     </div>
-                    <div class="flex justify-between items-center text-base font-bold text-charmeDark pt-2 border-t border-stone-200">
-                        <span>Total Keseluruhan:</span>
-                        <span id="builder-grand-total" class="text-charmeGold text-xl">Rp 150.000</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3 pt-2">
-                        <button onclick="resetBuilder()" class="w-full py-3 rounded-xl border border-stone-300 text-stone-700 font-semibold hover:bg-stone-100 transition text-sm">
-                            Reset Rangkaian
+                </div>
+            </div>
+
+            <!-- Featured Collection -->
+            <div class="py-16 bg-blush/20 border-y border-blush/30">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                        <div>
+                            <span class="text-xs uppercase tracking-widest text-champagne font-bold">Curated Picks</span>
+                            <h2 class="font-serif text-3xl sm:text-4xl text-deepCocoa mt-1">Featured Best-Sellers</h2>
+                        </div>
+                        <button onclick="navigateTo('shop')" class="mt-4 md:mt-0 text-xs font-bold uppercase tracking-wider text-dustyRose hover:text-deepCocoa flex items-center gap-2">
+                            View All Shop Products <i class="fa-solid fa-arrow-right"></i>
                         </button>
-                        <button onclick="addCustomBraceletToCart()" class="w-full py-3 rounded-xl bg-charmeDark text-white font-semibold hover:bg-charmeGold transition text-sm shadow-md flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-bag-shopping"></i> Masukkan Keranjang
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="home-featured-grid">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="py-20 bg-ivory">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-16">
+                        <span class="text-xs uppercase tracking-widest text-dustyRose font-bold">Easy 3-Step Process</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl text-deepCocoa mt-2">How You Create Your Story</h2>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8 relative">
+                        <!-- Step 1 -->
+                        <div class="bg-white p-8 rounded-3xl border border-blush/50 text-center space-y-4 relative">
+                            <span class="font-serif text-5xl text-champagne opacity-60">01</span>
+                            <h3 class="font-serif text-xl text-deepCocoa">Choose Your Base</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Select your favorite Italian link finish: Silver, Champagne Gold, or Blush Rose Gold.</p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="bg-white p-8 rounded-3xl border border-blush/50 text-center space-y-4 relative">
+                            <span class="font-serif text-5xl text-champagne opacity-60">02</span>
+                            <h3 class="font-serif text-xl text-deepCocoa">Pick Your Charms</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Browse charms that represent your zodiac, hobbies, relationships, and aesthetics.</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="bg-white p-8 rounded-3xl border border-blush/50 text-center space-y-4 relative">
+                            <span class="font-serif text-5xl text-champagne opacity-60">03</span>
+                            <h3 class="font-serif text-xl text-deepCocoa">Create Your Meaning</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Add a custom story note and preview your finished bracelet live before ordering!</p>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-12">
+                        <button onclick="navigateTo('builder')" class="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-md">
+                            Start Building Now
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Column: Charm Catalog Selector -->
-            <div class="lg:col-span-7 space-y-6">
-                <div class="flex items-center justify-between">
-                    <h3 class="font-serif font-bold text-lg text-charmeDark">Pilih Kategori Charm</h3>
-                    <div class="flex gap-1 overflow-x-auto">
-                        <button onclick="filterCharmSelector('all')" class="charm-filter-btn px-4 py-1.5 rounded-full text-xs font-medium bg-charmeDark text-white transition">Semua</button>
-                        <button onclick="filterCharmSelector('initial')" class="charm-filter-btn px-4 py-1.5 rounded-full text-xs font-medium bg-stone-200 text-stone-700 hover:bg-charmeDark hover:text-white transition">Inisial</button>
-                        <button onclick="filterCharmSelector('zodiac')" class="charm-filter-btn px-4 py-1.5 rounded-full text-xs font-medium bg-stone-200 text-stone-700 hover:bg-charmeDark hover:text-white transition">Zodiak</button>
-                        <button onclick="filterCharmSelector('symbol')" class="charm-filter-btn px-4 py-1.5 rounded-full text-xs font-medium bg-stone-200 text-stone-700 hover:bg-charmeDark hover:text-white transition">Simbol</button>
+            <!-- Limited Edition Section -->
+            <div class="py-16 bg-deepCocoa text-ivory">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid md:grid-cols-2 gap-10 items-center">
+                        <div class="space-y-4">
+                            <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-champagne text-deepCocoa inline-block">
+                                LIMITED DROP #001
+                            </span>
+                            <h2 class="font-serif text-3xl sm:text-4xl text-ivory">The Coquette & Celestial Edits</h2>
+                            <p class="text-warmTaupe text-sm leading-relaxed">
+                                Handcrafted zirconia star links and freshwater pearl bow charms. Produced in micro-batches with limited restocks available.
+                            </p>
+                            <p class="text-xs text-champagne italic">⚡ Only 24 pieces remaining in this batch.</p>
+                            <div class="pt-2">
+                                <button onclick="navigateTo('collections')" class="px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-champagne text-deepCocoa hover:bg-ivory transition-colors">
+                                    Explore Limited Edits
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-ivory/10 p-5 rounded-2xl backdrop-blur text-center space-y-2 border border-ivory/20">
+                                <div class="text-3xl">🎀</div>
+                                <h4 class="font-serif text-sm">The Coquette Edit</h4>
+                                <p class="text-[11px] text-warmTaupe">Romance & Pearls</p>
+                            </div>
+                            <div class="bg-ivory/10 p-5 rounded-2xl backdrop-blur text-center space-y-2 border border-ivory/20">
+                                <div class="text-3xl">🌙</div>
+                                <h4 class="font-serif text-sm">Celestial Edit</h4>
+                                <p class="text-[11px] text-warmTaupe">Cosmic Zodiac</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Charm Grid -->
-                <div id="charm-selector-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-h-[420px] overflow-y-auto pr-2 custom-scrollbar">
-                    <!-- Charm items injected via JS -->
+            <!-- Customer Stories Testimonials -->
+            <div class="py-16 bg-ivory">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <h2 class="font-serif text-3xl sm:text-4xl text-deepCocoa">Every Charm Has A Story</h2>
+                        <p class="text-warmTaupe text-sm mt-1">Real stories from our CHARMÉ community.</p>
+                    </div>
+
+                    <div class="grid sm:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-2xl border border-blush/40 shadow-soft space-y-3">
+                            <div class="text-champagne text-xs">★★★★★</div>
+                            <p class="text-xs text-deepCocoa leading-relaxed italic">
+                                "Aku sama pacarku pesen Bestie/Couple set pas anniversary. Kualitas stainless steel-nya bagus banget & ngga berkarat dipake mandi!"
+                            </p>
+                            <div class="text-xs font-bold text-warmTaupe">— Clarissa T., Jakarta</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-blush/40 shadow-soft space-y-3">
+                            <div class="text-champagne text-xs">★★★★★</div>
+                            <p class="text-xs text-deepCocoa leading-relaxed italic">
+                                "Fitur Build Your Bracelet di websitenya seru banget! Bisa preview charm satu-satu sebelum bayar. Loved the bow & zodiac charms!"
+                            </p>
+                            <div class="text-xs font-bold text-warmTaupe">— Nabila R., Bandung</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-blush/40 shadow-soft space-y-3">
+                            <div class="text-champagne text-xs">★★★★★</div>
+                            <p class="text-xs text-deepCocoa leading-relaxed italic">
+                                "Packagingnya cantik banget dapet pouch & thank you card. Beli starter set cuma Rp 50rb dapet 2 charm, best purchase ever!"
+                            </p>
+                            <div class="text-xs font-bold text-warmTaupe">— Amanda S., Surabaya</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-        </div>
-    </section>
-
-    <section id="collections" class="py-20 bg-[#EFECE6]/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
-                <span class="text-xs uppercase tracking-widest text-charmeGold font-semibold">Koleksi Terkurasi</span>
-                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-charmeDark">Pilihan Best-Sellers CHARMÉ</h2>
-                <p class="text-stone-600">Gelang siap pakai dengan kombinasi charm terfavorit pilihan para ikon mode.</p>
-            </div>
-
-            <!-- Product Grid -->
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Product cards injected via JS -->
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-charmeDark text-white rounded-3xl p-8 sm:p-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative overflow-hidden">
-            <!-- Background aesthetic pattern ring -->
-            <div class="absolute -right-20 -bottom-20 w-96 h-96 rounded-full border border-white/10 pointer-events-none"></div>
-            
-            <div class="space-y-6">
-                <span class="inline-block px-4 py-1.5 rounded-full bg-charmeGold/20 text-charmeGold text-xs font-semibold tracking-wider uppercase">
-                    Italian Heritage
-                </span>
-                <h2 class="text-3xl sm:text-4xl font-serif font-bold leading-tight">Tradisi Modular Italien Sejak 1987</h2>
-                <p class="text-stone-300 text-sm sm:text-base leading-relaxed">
-                    Setiap link modular CHARMÉ diciptakan dengan presisi tinggi di Italia menggunakan baja tahan karat premium (Stainless Steel 316L) yang dipadukan dengan emas 18k. Tahan air, anti karat, dan dirancang untuk menemani setiap detik perjalanan hidup Anda selamanya.
-                </p>
-                <div class="grid grid-cols-2 gap-6 pt-4 border-t border-stone-800">
+            <!-- Final CTA Banner -->
+            <div class="py-16 bg-gradient-to-r from-blush/40 via-ivory to-blush/40 text-center border-t border-blush/30">
+                <div class="max-w-3xl mx-auto px-4 space-y-4">
+                    <h2 class="font-serif text-3xl sm:text-4xl text-deepCocoa">Ready To Tell Your Story?</h2>
+                    <p class="text-warmTaupe text-sm">Choose your charms. Create your meaning. Make it yours.</p>
                     <div>
-                        <h4 class="text-3xl font-serif font-bold text-charmeGold">100%</h4>
-                        <p class="text-xs text-stone-400 mt-1">Anti Karat & Hipoalergenik</p>
-                    </div>
-                    <div>
-                        <h4 class="text-3xl font-serif font-bold text-charmeGold">Lifetime</h4>
-                        <p class="text-xs text-stone-400 mt-1">Garansi Mekanisme Link</p>
+                        <button onclick="navigateTo('builder')" class="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-md">
+                            ✨ Build Your Bracelet Now
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="relative">
-                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80" alt="Italian Craftsmanship" class="rounded-2xl shadow-2xl object-cover h-[380px] w-full border-4 border-stone-800">
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="reviews" class="py-20 bg-[#F9F6F0]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
-                <span class="text-xs uppercase tracking-widest text-charmeGold font-semibold">Testimonials</span>
-                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-charmeDark">Kisah Cinta Pelanggan CHARMÉ</h2>
-                <p class="text-stone-600">Apa kata mereka yang telah merangkai cerita bersama gelang modular kami.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-[#EFECE6] flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="flex text-amber-500 gap-1 text-sm">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-stone-600 text-sm italic leading-relaxed">"Suka banget sama fitur custom builder-nya! Bisa pasang inisial namaku dan zodiak. Kualitas steel-nya beneran premium, dipake mandi gak luntur sama sekali."</p>
-                    </div>
-                    <div class="mt-6 flex items-center gap-3 pt-4 border-t border-stone-100">
-                        <div class="w-10 h-10 rounded-full bg-charmeGold/20 flex items-center justify-center font-bold text-charmeDark">N</div>
-                        <div>
-                            <h4 class="font-bold text-sm text-charmeDark">Nadine Salsabila</h4>
-                            <p class="text-xs text-stone-500">Jakarta Selatan</p>
-                        </div>
-                    </div>
+        <!-- ========================================== -->
+        <!-- 2. BUILD YOUR BRACELET (CORE INTERACTIVE FEATURE) -->
+        <!-- ========================================== -->
+        <section id="view-builder" class="view-section py-10 bg-ivory">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Builder Header -->
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <span class="text-xs font-bold uppercase tracking-widest text-champagne">Interactive Studio</span>
+                    <h1 class="font-serif text-3xl sm:text-4xl text-deepCocoa mt-1">Build Your Custom Bracelet</h1>
+                    <p class="text-warmTaupe text-xs sm:text-sm mt-1">Select your base, attach your favorite charms, and write your story.</p>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-[#EFECE6] flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="flex text-amber-500 gap-1 text-sm">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-stone-600 text-sm italic leading-relaxed">"Beli buat kado anniversary istri. Packaging kotaknya mewah banget ala perhiasan Italia asli. Istri langsung jatuh cinta!"</p>
-                    </div>
-                    <div class="mt-6 flex items-center gap-3 pt-4 border-t border-stone-100">
-                        <div class="w-10 h-10 rounded-full bg-charmeGold/20 flex items-center justify-center font-bold text-charmeDark">D</div>
-                        <div>
-                            <h4 class="font-bold text-sm text-charmeDark">Dimas Anggara</h4>
-                            <p class="text-xs text-stone-500">Surabaya</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-[#EFECE6] flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="flex text-amber-500 gap-1 text-sm">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-stone-600 text-sm italic leading-relaxed">"Modelnya timeless dan gampang dipadupadankan. Nanti mau tambah charm lagi koleksi perjalanan liburan berikutnya!"</p>
-                    </div>
-                    <div class="mt-6 flex items-center gap-3 pt-4 border-t border-stone-100">
-                        <div class="w-10 h-10 rounded-full bg-charmeGold/20 flex items-center justify-center font-bold text-charmeDark">C</div>
-                        <div>
-                            <h4 class="font-bold text-sm text-charmeDark">Clarissa Putri</h4>
-                            <p class="text-xs text-stone-500">Bandung</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <footer class="bg-charmeDark text-stone-300 py-16 border-t border-stone-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-            <div class="space-y-4 md:col-span-1">
-                <h3 class="text-2xl font-serif font-bold text-white tracking-widest">CHARMÉ</h3>
-                <p class="text-sm text-stone-400 leading-relaxed">Luxury Italian charm bracelets designed to tell your unique personal story.</p>
-                <div class="flex gap-3 pt-2 text-stone-400">
-                    <a href="#" class="w-9 h-9 rounded-full bg-stone-800 hover:bg-charmeGold hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-full bg-stone-800 hover:bg-charmeGold hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-full bg-stone-800 hover:bg-charmeGold hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-whatsapp"></i></a>
+                <!-- Wizard Progress Indicator -->
+                <div class="mb-10 max-w-3xl mx-auto">
+                    <div class="flex items-center justify-between relative">
+                        <!-- Progress Line -->
+                        <div class="absolute top-1/2 left-0 right-0 h-1 bg-blush/40 -z-0 -translate-y-1/2"></div>
+                        <div id="builder-progress-bar" class="absolute top-1/2 left-0 h-1 bg-dustyRose -z-0 -translate-y-1/2 transition-all duration-300 w-0"></div>
+
+                        <!-- Step Tabs -->
+                        <button onclick="setBuilderStep(1)" class="builder-step-btn z-10 flex flex-col items-center group focus:outline-none">
+                            <span id="step-badge-1" class="w-8 h-8 rounded-full bg-dustyRose text-white text-xs font-bold flex items-center justify-center border-2 border-ivory transition-colors">1</span>
+                            <span class="text-[11px] font-medium text-deepCocoa mt-1">Base</span>
+                        </button>
+                        <button onclick="setBuilderStep(2)" class="builder-step-btn z-10 flex flex-col items-center group focus:outline-none">
+                            <span id="step-badge-2" class="w-8 h-8 rounded-full bg-blush text-deepCocoa text-xs font-bold flex items-center justify-center border-2 border-ivory transition-colors">2</span>
+                            <span class="text-[11px] font-medium text-warmTaupe mt-1">Charms</span>
+                        </button>
+                        <button onclick="setBuilderStep(3)" class="builder-step-btn z-10 flex flex-col items-center group focus:outline-none">
+                            <span id="step-badge-3" class="w-8 h-8 rounded-full bg-blush text-deepCocoa text-xs font-bold flex items-center justify-center border-2 border-ivory transition-colors">3</span>
+                            <span class="text-[11px] font-medium text-warmTaupe mt-1">Preview</span>
+                        </button>
+                        <button onclick="setBuilderStep(4)" class="builder-step-btn z-10 flex flex-col items-center group focus:outline-none">
+                            <span id="step-badge-4" class="w-8 h-8 rounded-full bg-blush text-deepCocoa text-xs font-bold flex items-center justify-center border-2 border-ivory transition-colors">4</span>
+                            <span class="text-[11px] font-medium text-warmTaupe mt-1">Story</span>
+                        </button>
+                        <button onclick="setBuilderStep(5)" class="builder-step-btn z-10 flex flex-col items-center group focus:outline-none">
+                            <span id="step-badge-5" class="w-8 h-8 rounded-full bg-blush text-deepCocoa text-xs font-bold flex items-center justify-center border-2 border-ivory transition-colors">5</span>
+                            <span class="text-[11px] font-medium text-warmTaupe mt-1">Summary</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP CONTENT CONTAINERS -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 gold-border shadow-soft">
+                    
+                    <!-- STEP 1: CHOOSE BASE -->
+                    <div id="builder-step-1" class="step-pane space-y-6">
+                        <div>
+                            <h2 class="font-serif text-2xl text-deepCocoa">Step 1: Choose Bracelet Base</h2>
+                            <p class="text-xs text-warmTaupe">Select your high-grade 316L stainless steel Italian charm base color.</p>
+                        </div>
+
+                        <div class="grid sm:grid-cols-3 gap-6" id="base-options-grid">
+                            <!-- Populated dynamically via JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: CHOOSE CHARMS -->
+                    <div id="builder-step-2" class="step-pane hidden space-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <h2 class="font-serif text-2xl text-deepCocoa">Step 2: Choose Your Charms</h2>
+                                <p class="text-xs text-warmTaupe">Pick charms to snap onto your Italian links. Click to add/remove.</p>
+                            </div>
+                            <div class="bg-blush/30 px-4 py-2 rounded-xl text-xs font-bold text-deepCocoa">
+                                Selected Charms: <span id="charms-count-badge" class="text-dustyRose">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Category Filters -->
+                        <div class="flex flex-wrap gap-2 text-xs" id="charm-category-filters">
+                            <!-- Populated dynamically -->
+                        </div>
+
+                        <!-- Charms Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-h-[420px] overflow-y-auto p-1" id="charms-selection-grid">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: LIVE PREVIEW & REORDER -->
+                    <div id="builder-step-3" class="step-pane hidden space-y-6">
+                        <div class="text-center max-w-lg mx-auto">
+                            <h2 class="font-serif text-2xl text-deepCocoa">Step 3: Live Visual Preview</h2>
+                            <p class="text-xs text-warmTaupe">This is how your customized Italian charm bracelet will look. You can click any charm to remove it.</p>
+                        </div>
+
+                        <!-- Visual Interactive Canvas/SVG Graphic Container -->
+                        <div class="bg-ivory p-6 rounded-2xl border border-blush/60 text-center">
+                            <div id="live-bracelet-canvas" class="min-h-[140px] flex items-center justify-center overflow-x-auto py-4">
+                                <!-- Dynamic SVG Bracelet Links Rendered by JS -->
+                            </div>
+                            <div class="mt-4 flex flex-wrap justify-center items-center gap-4 text-xs text-deepCocoa">
+                                <div><strong>Base Finish:</strong> <span id="preview-base-name">Silver Stainless</span></div>
+                                <div><strong>Charms Count:</strong> <span id="preview-charm-count">0</span></div>
+                                <div><strong>Estimated Total:</strong> <span id="preview-total-price" class="text-dustyRose font-bold">Rp 35.000</span></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-blush/20 p-4 rounded-xl text-xs text-deepCocoa flex items-start gap-3">
+                            <i class="fa-solid fa-circle-info text-champagne text-base mt-0.5"></i>
+                            <p>CHARMÉ Italian charms are modular. You can easily unclip and re-arrange their order at home using our complimentary charm opener tool provided in your order.</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: STORY & MEANING -->
+                    <div id="builder-step-4" class="step-pane hidden space-y-6 max-w-xl mx-auto">
+                        <div class="text-center space-y-1">
+                            <h2 class="font-serif text-2xl text-deepCocoa">Step 4: What Does Your Bracelet Represent?</h2>
+                            <p class="text-xs text-warmTaupe">Select a theme for your custom gift packaging story card.</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="story-tag-options">
+                            <!-- Options like Love, Friendship, Memories, Self-expression, Cute -->
+                        </div>
+
+                        <div class="space-y-2 pt-2">
+                            <label class="block text-xs font-medium text-deepCocoa">Personal Note / Meaning (Optional):</label>
+                            <textarea id="story-note-input" rows="3" class="w-full text-xs p-3 rounded-xl border border-blush/60 gold-border-focus bg-ivory/50" placeholder="e.g. A gift for Sarah to celebrate our graduation memory... 💗"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: FINAL SUMMARY & ADD TO CART -->
+                    <div id="builder-step-5" class="step-pane hidden space-y-6 max-w-xl mx-auto">
+                        <div class="text-center">
+                            <div class="w-12 h-12 mx-auto rounded-full bg-blush/50 text-dustyRose flex items-center justify-center text-2xl mb-2">
+                                💗
+                            </div>
+                            <h2 class="font-serif text-2xl text-deepCocoa">Your Story Is Ready</h2>
+                            <p class="text-xs text-warmTaupe">Review your custom creation before adding to your cart.</p>
+                        </div>
+
+                        <div id="summary-breakdown-card" class="bg-ivory p-6 rounded-2xl border border-blush/60 space-y-4 text-xs text-deepCocoa">
+                            <!-- Dynamic summary JS -->
+                        </div>
+
+                        <button onclick="addCustomBraceletToCart()" class="w-full py-4 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bag-shopping"></i> Add Custom Bracelet To Cart
+                        </button>
+                    </div>
+
+                    <!-- Wizard Navigation Buttons -->
+                    <div class="flex items-center justify-between border-t border-blush/30 pt-6 mt-8">
+                        <button id="builder-prev-btn" onclick="prevBuilderStep()" class="px-6 py-2.5 rounded-full text-xs font-bold text-deepCocoa bg-ivory border border-blush hover:bg-blush/30 transition-all hidden">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Back
+                        </button>
+
+                        <button id="builder-next-btn" onclick="nextBuilderStep()" class="ml-auto px-8 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-sm">
+                            Next Step <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Navigasi</h4>
-                <ul class="space-y-2.5 text-sm text-stone-400">
-                    <li><a href="#home" class="hover:text-charmeGold transition">Beranda</a></li>
-                    <li><a href="#builder" class="hover:text-charmeGold transition">Studio Custom</a></li>
-                    <li><a href="#collections" class="hover:text-charmeGold transition">Koleksi</a></li>
-                    <li><a href="#about" class="hover:text-charmeGold transition">Filosofi Kami</a></li>
-                </ul>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 3. SHOP PAGE -->
+        <!-- ========================================== -->
+        <section id="view-shop" class="view-section py-10 bg-ivory">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                
+                <div class="text-center max-w-xl mx-auto space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-widest text-champagne">Shop Catalog</span>
+                    <h1 class="font-serif text-3xl sm:text-4xl text-deepCocoa">Explore All Collections</h1>
+                    <p class="text-warmTaupe text-xs sm:text-sm">Starter sets, matching sets, standalone charm links, and limited drops.</p>
+                </div>
+
+                <!-- Filters and Search Bar -->
+                <div class="bg-white p-4 rounded-2xl gold-border shadow-soft flex flex-col md:flex-row items-center justify-between gap-4">
+                    
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-72">
+                        <input type="text" id="shop-search-input" onkeyup="filterShopProducts()" placeholder="Search charms, sets..." class="w-full text-xs pl-9 pr-4 py-2.5 rounded-xl border border-blush/60 gold-border-focus bg-ivory/40">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-warmTaupe text-xs"></i>
+                    </div>
+
+                    <!-- Filter Categories Pills -->
+                    <div class="flex flex-wrap items-center justify-center gap-2 text-xs" id="shop-category-pills">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Sort Dropdown -->
+                    <div class="w-full md:w-auto">
+                        <select id="shop-sort-select" onchange="filterShopProducts()" class="w-full text-xs px-3 py-2.5 rounded-xl border border-blush/60 gold-border-focus bg-ivory/40 text-deepCocoa">
+                            <option value="recommended">Recommended</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Product Grid -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="shop-products-grid">
+                    <!-- Populated dynamically by JS -->
+                </div>
             </div>
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Layanan</h4>
-                <ul class="space-y-2.5 text-sm text-stone-400">
-                    <li><a href="#" class="hover:text-charmeGold transition">Panduan Ukuran Gelang</a></li>
-                    <li><a href="#" class="hover:text-charmeGold transition">Perawatan Perhiasan</a></li>
-                    <li><a href="#" class="hover:text-charmeGold transition">Garansi & Pengembalian</a></li>
-                    <li><a href="#" class="hover:text-charmeGold transition">Konfirmasi Pembayaran</a></li>
-                </ul>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4. COLLECTIONS PAGE -->
+        <!-- ========================================== -->
+        <section id="view-collections" class="view-section py-10 bg-ivory">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                <div class="text-center max-w-2xl mx-auto space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-widest text-champagne">Editorial Edits</span>
+                    <h1 class="font-serif text-3xl sm:text-4xl text-deepCocoa">Curated Collections</h1>
+                    <p class="text-warmTaupe text-xs sm:text-sm">Theme-based aesthetics curated for your mood, relationship, and lifestyle.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Collection 1 -->
+                    <div class="bg-white rounded-3xl overflow-hidden gold-border shadow-soft group">
+                        <div class="h-56 bg-blush/30 flex items-center justify-center text-6xl relative overflow-hidden">
+                            <span class="group-hover:scale-110 transition-transform duration-500">🎀</span>
+                            <span class="absolute top-4 left-4 bg-dustyRose text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Drop #001</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-serif text-2xl text-deepCocoa">The Coquette Edit</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">For the girls who love romance, bows, soft pearls, and vintage aesthetic details.</p>
+                            <button onclick="navigateTo('shop'); setShopCategory('limited')" class="text-xs font-bold uppercase tracking-wider text-dustyRose hover:text-deepCocoa flex items-center gap-2 pt-2">
+                                Explore Coquette Items <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Collection 2 -->
+                    <div class="bg-white rounded-3xl overflow-hidden gold-border shadow-soft group">
+                        <div class="h-56 bg-deepCocoa text-ivory flex items-center justify-center text-6xl relative overflow-hidden">
+                            <span class="group-hover:scale-110 transition-transform duration-500">🌙</span>
+                            <span class="absolute top-4 left-4 bg-champagne text-deepCocoa text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Zodiac & Stars</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-serif text-2xl text-deepCocoa">Celestial Edit</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Wear your universe. Constellations, moon phases, and glittering zirconias.</p>
+                            <button onclick="navigateTo('shop'); setShopCategory('charms')" class="text-xs font-bold uppercase tracking-wider text-dustyRose hover:text-deepCocoa flex items-center gap-2 pt-2">
+                                Explore Celestial Charms <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Collection 3 -->
+                    <div class="bg-white rounded-3xl overflow-hidden gold-border shadow-soft group">
+                        <div class="h-56 bg-blush/20 flex items-center justify-center text-6xl relative overflow-hidden">
+                            <span class="group-hover:scale-110 transition-transform duration-500">👯‍♀️</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-serif text-2xl text-deepCocoa">Bestie Edit</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">One for you, one for me. Matching sets and split charm links designed for best friends.</p>
+                            <button onclick="navigateTo('shop'); setShopCategory('gift')" class="text-xs font-bold uppercase tracking-wider text-dustyRose hover:text-deepCocoa flex items-center gap-2 pt-2">
+                                Explore Bestie Sets <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Collection 4 -->
+                    <div class="bg-white rounded-3xl overflow-hidden gold-border shadow-soft group">
+                        <div class="h-56 bg-champagne/20 flex items-center justify-center text-6xl relative overflow-hidden">
+                            <span class="group-hover:scale-110 transition-transform duration-500">📸</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-serif text-2xl text-deepCocoa">Memory Edit</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Keep your little moments, travel milestones, and special dates close to your wrist.</p>
+                            <button onclick="navigateTo('builder')" class="text-xs font-bold uppercase tracking-wider text-dustyRose hover:text-deepCocoa flex items-center gap-2 pt-2">
+                                Build Memory Bracelet <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="space-y-4">
-                <h4 class="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Newsletter</h4>
-                <p class="text-xs text-stone-400">Dapatkan diskon eksklusif 10% untuk pembelian pertamamu.</p>
-                <form onsubmit="event.preventDefault(); showNotification('Terima kasih telah berlangganan!');" class="space-y-2">
-                    <input type="email" placeholder="Alamat email kamu" required class="w-full px-4 py-3 rounded-xl bg-stone-900 border border-stone-800 text-sm text-white focus:outline-none focus:border-charmeGold">
-                    <button type="submit" class="w-full py-2.5 bg-charmeGold text-charmeDark font-semibold rounded-xl text-sm hover:bg-white transition">Daftar</button>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 5. ABOUT US PAGE -->
+        <!-- ========================================== -->
+        <section id="view-about" class="view-section py-12 bg-ivory">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                
+                <div class="text-center space-y-4">
+                    <span class="text-xs font-bold uppercase tracking-widest text-champagne">Our Brand Philosophy</span>
+                    <h1 class="font-serif text-4xl sm:text-5xl text-deepCocoa">Jewelry Should Feel Personal.</h1>
+                    <p class="text-warmTaupe text-sm leading-relaxed max-w-2xl mx-auto">
+                        CHARMÉ was created from a simple idea: everyone has stories, interests, relationships, and little moments that make them who they are. Instead of wearing mass-produced jewelry that simply looks pretty, CHARMÉ lets you wear something meaningful.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl gold-border shadow-soft space-y-6">
+                    <h2 class="font-serif text-2xl text-deepCocoa text-center">Our Core Values</h2>
+                    
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="space-y-2 p-4 bg-ivory rounded-2xl">
+                            <h3 class="font-serif text-lg text-dustyRose">01. Personal</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Every charm tells a story. No two CHARMÉ bracelets are ever identical.</p>
+                        </div>
+                        <div class="space-y-2 p-4 bg-ivory rounded-2xl">
+                            <h3 class="font-serif text-lg text-dustyRose">02. Meaningful</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Celebrate friendships, milestones, zodiacs, and loved ones with physical tokens.</p>
+                        </div>
+                        <div class="space-y-2 p-4 bg-ivory rounded-2xl">
+                            <h3 class="font-serif text-lg text-dustyRose">03. Playful</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Modular Italian links let you re-arrange and swap charms whenever your mood changes.</p>
+                        </div>
+                        <div class="space-y-2 p-4 bg-ivory rounded-2xl">
+                            <h3 class="font-serif text-lg text-dustyRose">04. Accessible</h3>
+                            <p class="text-xs text-warmTaupe leading-relaxed">Water-resistant 316L stainless steel crafted for Gen Z without luxury markups.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center space-y-4">
+                    <h3 class="font-serif text-2xl text-deepCocoa">Ready To Begin Your Story?</h3>
+                    <button onclick="navigateTo('builder')" class="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-md">
+                        ✨ Start Building Your Bracelet
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 6. CART PAGE VIEW -->
+        <!-- ========================================== -->
+        <section id="view-cart" class="view-section py-10 bg-ivory">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <div class="text-center space-y-2">
+                    <h1 class="font-serif text-3xl sm:text-4xl text-deepCocoa">Your Shopping Bag</h1>
+                    <p class="text-warmTaupe text-xs">Review your stories before checkout.</p>
+                </div>
+
+                <div id="full-cart-container" class="bg-white rounded-3xl p-6 sm:p-8 gold-border shadow-soft space-y-6">
+                    <!-- Dynamic Cart Contents Rendered Here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 7. CHECKOUT PAGE -->
+        <!-- ========================================== -->
+        <section id="view-checkout" class="view-section py-10 bg-ivory">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-widest text-champagne">Secure Checkout</span>
+                    <h1 class="font-serif text-3xl sm:text-4xl text-deepCocoa">Complete Your Order</h1>
+                </div>
+
+                <form id="checkout-form" onsubmit="handlePlaceOrder(event)" class="grid lg:grid-cols-12 gap-8">
+                    
+                    <!-- Form Columns -->
+                    <div class="lg:col-span-7 space-y-6">
+                        
+                        <!-- Step 01: Customer Info -->
+                        <div class="bg-white p-6 rounded-2xl border border-blush/60 space-y-4">
+                            <h3 class="font-serif text-lg text-deepCocoa flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-blush text-deepCocoa text-xs flex items-center justify-center font-bold">1</span>
+                                Customer Information
+                            </h3>
+
+                            <div class="grid sm:grid-cols-2 gap-4 text-xs">
+                                <div class="space-y-1">
+                                    <label class="block font-medium text-deepCocoa">Full Name *</label>
+                                    <input type="text" required id="checkout-name" placeholder="e.g. Amanda Putri" class="w-full p-3 rounded-xl border border-blush/60 gold-border-focus bg-ivory/30">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block font-medium text-deepCocoa">WhatsApp Number *</label>
+                                    <input type="tel" required id="checkout-phone" placeholder="e.g. 08123456789" class="w-full p-3 rounded-xl border border-blush/60 gold-border-focus bg-ivory/30">
+                                </div>
+                                <div class="sm:col-span-2 space-y-1">
+                                    <label class="block font-medium text-deepCocoa">Email Address *</label>
+                                    <input type="email" required id="checkout-email" placeholder="e.g. amanda@gmail.com" class="w-full p-3 rounded-xl border border-blush/60 gold-border-focus bg-ivory/30">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 02: Shipping Address -->
+                        <div class="bg-white p-6 rounded-2xl border border-blush/60 space-y-4">
+                            <h3 class="font-serif text-lg text-deepCocoa flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-blush text-deepCocoa text-xs flex items-center justify-center font-bold">2</span>
+                                Shipping Address
+                            </h3>
+
+                            <div class="space-y-4 text-xs">
+                                <div class="space-y-1">
+                                    <label class="block font-medium text-deepCocoa">Street Address & House No. *</label>
+                                    <textarea required id="checkout-address" rows="2" placeholder="e.g. Jl. Senopati No. 45, Kebayoran Baru" class="w-full p-3 rounded-xl border border-blush/60 gold-border-focus bg-ivory/30"></textarea>
+                                </div>
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <div class="space-y-1">
+                                        <label class="block font-medium text-deepCocoa">City / Regency *</label>
+                                        <input type="text" required id="checkout-city" placeholder="e.g. Jakarta Selatan" class="w-full p-3 rounded-xl border border-blush/60 gold-border-focus bg-ivory/30">
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label class="block font-medium text-deepCocoa">Postal Code *</label>
+                                        <input type="text" required id="checkout-postal" placeholder="e.g. 12190" class="w-full p-3 rounded-xl border border-blush/60 gold-border-focus bg-ivory/30">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 03: Delivery Options -->
+                        <div class="bg-white p-6 rounded-2xl border border-blush/60 space-y-4">
+                            <h3 class="font-serif text-lg text-deepCocoa flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-blush text-deepCocoa text-xs flex items-center justify-center font-bold">3</span>
+                                Delivery Courier
+                            </h3>
+
+                            <div class="grid sm:grid-cols-2 gap-4 text-xs">
+                                <label class="border p-4 rounded-xl flex items-start gap-3 cursor-pointer hover:border-dustyRose transition-colors">
+                                    <input type="radio" name="delivery" value="regular" checked onchange="updateCheckoutTotals()" class="mt-0.5 text-dustyRose">
+                                    <div>
+                                        <div class="font-bold text-deepCocoa">Regular Shipping (2-3 days)</div>
+                                        <div class="text-warmTaupe text-[11px] mt-0.5">JNE / SiCepat — Rp 10.000</div>
+                                    </div>
+                                </label>
+                                <label class="border p-4 rounded-xl flex items-start gap-3 cursor-pointer hover:border-dustyRose transition-colors">
+                                    <input type="radio" name="delivery" value="express" onchange="updateCheckoutTotals()" class="mt-0.5 text-dustyRose">
+                                    <div>
+                                        <div class="font-bold text-deepCocoa">Express Delivery (1 day)</div>
+                                        <div class="text-warmTaupe text-[11px] mt-0.5">Paxel / Instant — Rp 20.000</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Step 04: Payment Method -->
+                        <div class="bg-white p-6 rounded-2xl border border-blush/60 space-y-4">
+                            <h3 class="font-serif text-lg text-deepCocoa flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-blush text-deepCocoa text-xs flex items-center justify-center font-bold">4</span>
+                                Payment Method
+                            </h3>
+
+                            <div class="space-y-3 text-xs">
+                                <label class="border p-4 rounded-xl flex items-center gap-3 cursor-pointer hover:border-dustyRose transition-colors">
+                                    <input type="radio" name="payment" value="qris" checked class="text-dustyRose">
+                                    <span class="font-bold text-deepCocoa">QRIS Instant Payment</span>
+                                    <span class="ml-auto text-[10px] bg-blush/40 px-2 py-0.5 rounded font-bold">GoPay, OVO, ShopeePay, BCA</span>
+                                </label>
+
+                                <label class="border p-4 rounded-xl flex items-center gap-3 cursor-pointer hover:border-dustyRose transition-colors">
+                                    <input type="radio" name="payment" value="bank" class="text-dustyRose">
+                                    <span class="font-bold text-deepCocoa">Bank Transfer (BCA / Mandiri)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary Sidebar -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="bg-white p-6 rounded-3xl gold-border shadow-soft space-y-6 sticky top-28">
+                            <h3 class="font-serif text-xl text-deepCocoa">Order Summary</h3>
+
+                            <div id="checkout-summary-items" class="space-y-4 max-h-60 overflow-y-auto text-xs border-b border-blush/40 pb-4">
+                                <!-- Populated dynamically -->
+                            </div>
+
+                            <div class="space-y-2 text-xs text-deepCocoa">
+                                <div class="flex justify-between">
+                                    <span class="text-warmTaupe">Subtotal:</span>
+                                    <span id="checkout-subtotal">Rp 0</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-warmTaupe">Shipping Cost:</span>
+                                    <span id="checkout-shipping">Rp 10.000</span>
+                                </div>
+                                <div id="free-shipping-discount-row" class="flex justify-between text-dustyRose hidden">
+                                    <span>Free Shipping Discount:</span>
+                                    <span>-Rp 10.000</span>
+                                </div>
+                                <div class="flex justify-between font-serif text-lg font-bold text-deepCocoa pt-3 border-t border-blush/40">
+                                    <span>Total Payment:</span>
+                                    <span id="checkout-final-total" class="text-dustyRose">Rp 0</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-md">
+                                Place Order & Pay Now 💗
+                            </button>
+
+                            <p class="text-[10px] text-warmTaupe text-center">
+                                By placing an order, you agree to CHARMÉ's terms of service and custom story crafting policy.
+                            </p>
+                        </div>
+                    </div>
                 </form>
             </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- DRAWERS & MODALS -->
+    <!-- ========================================== -->
+
+    <!-- Cart Slide-Out Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+        <div class="absolute inset-0 bg-deepCocoa/40 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer(false)"></div>
+
+        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <div class="pointer-events-auto w-screen max-w-md bg-ivory shadow-xl flex flex-col justify-between">
+                
+                <!-- Drawer Header -->
+                <div class="p-6 bg-white border-b border-blush/40 flex items-center justify-between">
+                    <h2 class="font-serif text-xl text-deepCocoa">Your Shopping Bag</h2>
+                    <button onclick="toggleCartDrawer(false)" class="p-2 text-warmTaupe hover:text-deepCocoa">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Drawer Body -->
+                <div id="cart-drawer-items" class="flex-grow p-6 overflow-y-auto space-y-4">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Drawer Footer -->
+                <div class="p-6 bg-white border-t border-blush/40 space-y-4">
+                    <div class="flex justify-between items-center text-sm font-bold text-deepCocoa">
+                        <span>Subtotal:</span>
+                        <span id="cart-drawer-subtotal" class="font-serif text-lg text-dustyRose">Rp 0</span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <button onclick="toggleCartDrawer(false); navigateTo('checkout');" class="w-full py-3.5 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-sm">
+                            Proceed to Checkout
+                        </button>
+                        <button onclick="toggleCartDrawer(false); navigateTo('cart');" class="w-full py-2.5 rounded-full text-xs font-bold text-deepCocoa bg-ivory hover:bg-blush/30 transition-all">
+                            View Full Bag
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-stone-800 text-center text-xs text-stone-500">
-            &copy; 2026 CHARMÉ Italia Bracelets. All rights reserved.
+    </div>
+
+    <!-- Quick View Product Modal -->
+    <div id="quick-view-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-deepCocoa/40 backdrop-blur-sm hidden">
+        <div class="bg-ivory rounded-3xl max-w-2xl w-full p-6 sm:p-8 gold-border shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeQuickViewModal()" class="absolute top-4 right-4 p-2 text-warmTaupe hover:text-deepCocoa">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div id="quick-view-content" class="grid md:grid-cols-2 gap-6">
+                <!-- Content inserted by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmed Celebratory Modal -->
+    <div id="order-confirmed-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-deepCocoa/60 backdrop-blur-md hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 gold-border shadow-2xl text-center space-y-6">
+            <div class="w-16 h-16 mx-auto rounded-full bg-blush/50 text-dustyRose flex items-center justify-center text-3xl">
+                💗
+            </div>
+            
+            <div class="space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-champagne">Order Confirmed!</span>
+                <h2 class="font-serif text-3xl text-deepCocoa">Thank You!</h2>
+                <p class="text-xs text-warmTaupe leading-relaxed">
+                    Thank you for creating your story with CHARMÉ. We are carefully handcrafting your custom order now.
+                </p>
+            </div>
+
+            <div id="modal-order-summary" class="bg-ivory p-4 rounded-2xl text-xs text-left space-y-2">
+                <!-- Order Details -->
+            </div>
+
+            <!-- Dynamic QRIS Display Mock if payment was QRIS -->
+            <div id="qris-payment-box" class="bg-ivory p-4 rounded-2xl space-y-2 hidden border border-champagne/40">
+                <p class="text-[11px] font-bold text-deepCocoa">Scan QRIS to Complete Payment:</p>
+                <div class="w-36 h-36 bg-white mx-auto p-2 rounded-xl gold-border flex items-center justify-center font-mono text-[10px] text-center">
+                    [MOCK QRIS CODE]<br>CHARMÉ Official
+                </div>
+                <p class="text-[10px] text-warmTaupe">Support GoPay, OVO, ShopeePay, BCA Mobile</p>
+            </div>
+
+            <button onclick="closeOrderModal()" class="w-full py-3.5 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-md">
+                Back To Home Page
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="fixed bottom-20 sm:bottom-6 right-6 z-50 bg-deepCocoa text-ivory text-xs px-5 py-3 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0">
+        <i class="fa-solid fa-sparkles text-champagne"></i>
+        <span id="toast-message">Item added to your bag 💗</span>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar (Gen Z Friendly) -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-ivory/95 backdrop-blur-md border-t border-blush/40 py-2.5 px-6 flex justify-around items-center">
+        <button onclick="navigateTo('home')" class="flex flex-col items-center gap-1 text-deepCocoa hover:text-dustyRose focus:outline-none">
+            <i class="fa-solid fa-house text-base"></i>
+            <span class="text-[10px] font-medium">Home</span>
+        </button>
+        <button onclick="navigateTo('shop')" class="flex flex-col items-center gap-1 text-deepCocoa hover:text-dustyRose focus:outline-none">
+            <i class="fa-solid fa-store text-base"></i>
+            <span class="text-[10px] font-medium">Shop</span>
+        </button>
+        <button onclick="navigateTo('builder')" class="flex flex-col items-center gap-1 text-dustyRose font-bold focus:outline-none">
+            <i class="fa-solid fa-wand-magic-sparkles text-base"></i>
+            <span class="text-[10px]">Build</span>
+        </button>
+        <button onclick="toggleCartDrawer(true)" class="flex flex-col items-center gap-1 text-deepCocoa hover:text-dustyRose focus:outline-none relative">
+            <i class="fa-solid fa-bag-shopping text-base"></i>
+            <span class="text-[10px] font-medium">Cart</span>
+        </button>
+    </div>
+
+    <!-- Global Footer -->
+    <footer class="bg-deepCocoa text-ivory py-16 border-t border-champagne/20 mb-12 md:mb-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-ivory/10">
+                
+                <!-- Brand Info -->
+                <div class="space-y-4">
+                    <a href="#" onclick="navigateTo('home'); return false;" class="font-serif text-3xl tracking-wider text-ivory">CHARMÉ</a>
+                    <p class="text-xs text-warmTaupe leading-relaxed">
+                        Indonesian customizable Italian charm bracelets. Personalized, collectible, and meaningful jewelry for Gen Z.
+                    </p>
+                    <p class="text-xs italic text-champagne">"Your Bracelet, Your Story."</p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="space-y-3 text-xs">
+                    <h4 class="font-serif text-sm text-champagne">Explore</h4>
+                    <ul class="space-y-2 text-warmTaupe">
+                        <li><a href="#" onclick="navigateTo('home'); return false;" class="hover:text-ivory">Home</a></li>
+                        <li><a href="#" onclick="navigateTo('shop'); return false;" class="hover:text-ivory">Shop Collection</a></li>
+                        <li><a href="#" onclick="navigateTo('builder'); return false;" class="hover:text-ivory">Build Your Bracelet</a></li>
+                        <li><a href="#" onclick="navigateTo('collections'); return false;" class="hover:text-ivory">Edits & Drops</a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Care -->
+                <div class="space-y-3 text-xs">
+                    <h4 class="font-serif text-sm text-champagne">Customer Care</h4>
+                    <ul class="space-y-2 text-warmTaupe">
+                        <li><a href="#" class="hover:text-ivory">Shipping & Delivery Info</a></li>
+                        <li><a href="#" class="hover:text-ivory">Bracelet Size Guide</a></li>
+                        <li><a href="#" class="hover:text-ivory">Care & Stainless Steel Guide</a></li>
+                        <li><a href="#" class="hover:text-ivory">WhatsApp Customer Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="space-y-3 text-xs">
+                    <h4 class="font-serif text-sm text-champagne">Supported Payment</h4>
+                    <div class="flex flex-wrap gap-2 pt-1 text-xs">
+                        <span class="bg-ivory/10 px-2.5 py-1 rounded text-ivory">QRIS</span>
+                        <span class="bg-ivory/10 px-2.5 py-1 rounded text-ivory">BCA</span>
+                        <span class="bg-ivory/10 px-2.5 py-1 rounded text-ivory">Mandiri</span>
+                        <span class="bg-ivory/10 px-2.5 py-1 rounded text-ivory">GoPay</span>
+                        <span class="bg-ivory/10 px-2.5 py-1 rounded text-ivory">ShopeePay</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-warmTaupe gap-4">
+                <p>© 2026 CHARMÉ Indonesia. All rights reserved. Crafted with love 💗</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-ivory"><i class="fa-brands fa-instagram text-base"></i></a>
+                    <a href="#" class="hover:text-ivory"><i class="fa-brands fa-tiktok text-base"></i></a>
+                    <a href="#" class="hover:text-ivory"><i class="fa-brands fa-whatsapp text-base"></i></a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
-        <div onclick="toggleCart()" class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"></div>
-        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
-            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
-                <div class="p-6 bg-[#F9F6F0] border-b border-[#EFECE6] flex items-center justify-between">
-                    <h2 class="text-lg font-serif font-bold text-charmeDark flex items-center gap-2">
-                        <i class="fa-solid fa-bag-shopping text-charmeGold"></i> Keranjang Belanja
-                    </h2>
-                    <button onclick="toggleCart()" class="text-stone-400 hover:text-stone-700 p-2">
-                        <i class="fa-solid fa-xmark text-xl"></i>
-                    </button>
-                </div>
-                <!-- Cart Items Container -->
-                <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-stone-100">
-                    <!-- Dynamic cart items -->
-                </div>
-                <!-- Cart Footer -->
-                <div class="p-6 bg-[#F9F6F0] border-t border-[#EFECE6] space-y-4">
-                    <div class="flex justify-between text-base font-bold text-charmeDark">
-                        <span>Total:</span>
-                        <span id="cart-total" class="text-charmeGold">Rp 0</span>
-                    </div>
-                    <button onclick="checkoutWhatsApp()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm tracking-wide">
-                        <i class="fa-brands fa-whatsapp text-xl"></i> Pesan via WhatsApp
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="detail-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
-        <div onclick="closeDetailModal()" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-        <div class="relative bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl z-10 space-y-4">
-            <button onclick="closeDetailModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-700 p-2">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <div id="modal-content" class="space-y-4 pt-2">
-                <!-- Dynamic modal content -->
-            </div>
-        </div>
-    </div>
-
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <!-- ========================================== -->
     <script>
-        // Data Katalog Charm untuk Custom Builder
-        const charmCatalog = [
-            { id: 'c1', name: 'Initial A (Gold 18k)', category: 'initial', price: 65000, image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=300&q=80' },
-            { id: 'c2', name: 'Initial M (Gold 18k)', category: 'initial', price: 65000, image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=300&q=80' },
-            { id: 'c3', name: 'Initial S (Gold 18k)', category: 'initial', price: 65000, image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=300&q=80' },
-            { id: 'c4', name: 'Zodiac Leo Gold', category: 'zodiac', price: 75000, image: 'https://images.unsplash.com/photo-1611591475283-9b43d2c12574?auto=format&fit=crop&w=300&q=80' },
-            { id: 'c5', name: 'Zodiac Scorpio Gold', category: 'zodiac', price: 75000, image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=300&q=80' },
-            { id: 'c6', name: 'Zodiac Virgo Gold', category: 'zodiac', price: 75000, image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=300&q=80' },
-            { id: 'c7', name: 'Heart Ruby Red', category: 'symbol', price: 85000, image: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=300&q=80' },
-            { id: 'c8', name: 'Four-Leaf Clover', category: 'symbol', price: 85000, image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=300&q=80' },
-            { id: 'c9', name: 'Evil Eye Blue Crystal', category: 'symbol', price: 85000, image: 'https://images.unsplash.com/photo-1611591475283-9b43d2c12574?auto=format&fit=crop&w=300&q=80' }
-        ];
-
-        // Data Koleksi Best-Sellers
-        const collections = [
+        // BRAND PRODUCTS DATABASE
+        const PRODUCTS = [
             {
                 id: 'p1',
-                name: 'The Milano Initial Bracelet',
-                category: 'Signature Series',
-                price: 349000,
-                image: 'https://images.unsplash.com/photo-1611591475283-9b43d2c12574?auto=format&fit=crop&w=600&q=80',
-                description: 'Gelang modular stainless steel mewah dengan kombinasi link inisial pilihan dan aksen emas 18k anti luntur.'
+                name: 'CHARMÉ Starter Bracelet + 2 Charms',
+                price: 50000,
+                category: 'starter',
+                rating: 4.9,
+                reviews: 128,
+                badge: 'BEST SELLER',
+                desc: 'The ultimate beginner set. Includes 1 Italian stainless steel link bracelet + 2 customizable starter charms + signature pouch & thank you card.',
+                material: '316L Stainless Steel (Water-resistant)',
+                size: '17cm standard length (18 modular links)',
+                includes: ['1 Stainless Steel Base Link', '2 Custom Charms (Blush Heart & Bow)', '1 Velvet Dust Pouch', '1 Gift Story Card'],
+                icon: '💗'
             },
             {
                 id: 'p2',
-                name: 'Celestial Zodiac Edition',
-                category: 'Astrology Series',
-                price: 389000,
-                image: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=600&q=80',
-                description: 'Rangkaian spesial zodiak bertabur zirkonia berkilau yang merepresentasikan rasi bintang kelahiranmu.'
+                name: 'The Bestie Duo Matching Set',
+                price: 95000,
+                category: 'gift',
+                rating: 5.0,
+                reviews: 84,
+                badge: 'TRENDING',
+                desc: 'Two matching Italian charm bracelets with split butterfly magnet charms. Perfect for you and your best friend.',
+                material: '316L Stainless Steel',
+                size: '17cm x 2 Bracelets',
+                includes: ['2 Bracelet Bases', '4 Bestie Charm Links', '2 Velvet Pouches'],
+                icon: '👯‍♀️'
             },
             {
                 id: 'p3',
-                name: 'Amore Heart & Clover',
-                category: 'Romance Collection',
-                price: 419000,
-                image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80',
-                description: 'Kombinasi charm hati merah ruby dan daun semanggi keberuntungan. Simbol cinta dan hoki dalam satu gelang.'
+                name: 'The Celestial Charm Box',
+                price: 120000,
+                category: 'gift',
+                rating: 4.8,
+                reviews: 62,
+                badge: 'NEW',
+                desc: 'Curated collection with 5 celestial charms: Sun, Crescent Moon, Star, Galaxy & Zodiac link.',
+                material: 'Stainless Steel + Zirconia Crystals',
+                size: 'Customizable links',
+                includes: ['1 Champagne Gold Base', '5 Celestial Charms', 'Luxury Gift Box'],
+                icon: '🌙'
+            },
+            {
+                id: 'p4',
+                name: 'The Coquette Bow & Pearl Charm',
+                price: 25000,
+                category: 'limited',
+                rating: 4.9,
+                reviews: 95,
+                badge: 'LIMITED DROP',
+                desc: 'Exclusive Coquette collection charm link featuring handset freshwater pearl and champagne bow.',
+                material: '18k Champagne Gold Plated Stainless Steel',
+                size: 'Standard Italian Link (10mm)',
+                includes: ['1 Pearl Bow Charm Link'],
+                icon: '🎀'
+            },
+            {
+                id: 'p5',
+                name: 'Couple Lock & Key Bracelet Set',
+                price: 105000,
+                category: 'couple',
+                rating: 4.9,
+                reviews: 110,
+                badge: 'COUPLES FAVORITE',
+                desc: 'Interlocking lock and key Italian link charms for couples.',
+                material: '316L Stainless Steel',
+                size: 'His (19cm) & Hers (17cm)',
+                includes: ['2 Bracelet Bases', '4 Interlocking Charms'],
+                icon: '🔑'
+            },
+            {
+                id: 'p6',
+                name: 'Blush Cherry Blossom Charm',
+                price: 18000,
+                category: 'charms',
+                rating: 4.8,
+                reviews: 45,
+                badge: '',
+                desc: 'Hand-enamelled blush pink sakura blossom link.',
+                material: 'Enamel + Stainless Steel',
+                size: 'Standard Link',
+                includes: ['1 Charm Link'],
+                icon: '🌸'
+            },
+            {
+                id: 'p7',
+                name: 'Vintage Camera Charm Link',
+                price: 20000,
+                category: 'charms',
+                rating: 4.7,
+                reviews: 39,
+                badge: '',
+                desc: 'For photo memories and travel lovers.',
+                material: '316L Stainless Steel',
+                size: 'Standard Link',
+                includes: ['1 Charm Link'],
+                icon: '📷'
+            },
+            {
+                id: 'p8',
+                name: 'Zodiac Star Constellation Charm',
+                price: 22000,
+                category: 'charms',
+                rating: 4.9,
+                reviews: 210,
+                badge: 'POPULAR',
+                desc: 'Personalized zodiac constellation link with cubic zirconia star.',
+                material: 'Stainless Steel + CZ Crystal',
+                size: 'Standard Link',
+                includes: ['1 Charm Link'],
+                icon: '✨'
             }
         ];
 
-        let userCustomCharms = [];
-        let cart = [];
+        // BUILDER DATABASE
+        const BASE_OPTIONS = [
+            { id: 'silver', name: 'Silver Stainless Link', price: 35000, color: '#E5E7EB', borderColor: '#9CA3AF', textColor: '#374151' },
+            { id: 'gold', name: 'Champagne Gold Link', price: 40000, color: '#FDE68A', borderColor: '#C9A96E', textColor: '#78350F' },
+            { id: 'rosegold', name: 'Blush Rose Gold Link', price: 40000, color: '#FECDD3', borderColor: '#C98F96', textColor: '#881337' }
+        ];
 
-        function formatRupiah(amount) {
-            return 'Rp ' + amount.toLocaleString('id-ID');
+        const CHARMS_CATALOG = [
+            { id: 'c1', name: 'Blush Heart', price: 15000, category: 'Love', icon: '♥', color: '#E8C7C8' },
+            { id: 'c2', name: 'Coquette Bow', price: 20000, category: 'Girly', icon: '🎀', color: '#C98F96' },
+            { id: 'c3', name: 'Sparkle Star', price: 18000, category: 'Zodiac', icon: '✦', color: '#C9A96E' },
+            { id: 'c4', name: 'Crescent Moon', price: 18000, category: 'Zodiac', icon: '🌙', color: '#C9A96E' },
+            { id: 'c5', name: 'Bestie Butterfly', price: 22000, category: 'Friendship', icon: '🦋', color: '#C98F96' },
+            { id: 'c6', name: 'Matchy Teacup', price: 18000, category: 'Friendship', icon: '☕', color: '#A58F89' },
+            { id: 'c7', name: 'Cute Paw Print', price: 15000, category: 'Lifestyle', icon: '🐾', color: '#4A3635' },
+            { id: 'c8', name: 'Vintage Passport', price: 20000, category: 'Travel', icon: '✈', color: '#A58F89' },
+            { id: 'c9', name: 'Lucky 4-Leaf Clover', price: 18000, category: 'Lifestyle', icon: '🍀', color: '#86EFAC' },
+            { id: 'c10', name: 'Cherry Charm', price: 20000, category: 'Girly', icon: '🍒', color: '#F43F5E' },
+            { id: 'c11', name: 'Initial Letter (A-Z)', price: 15000, category: 'Love', icon: '✨', color: '#C9A96E' },
+            { id: 'c12', name: 'Coquette Pearl', price: 25000, category: 'Limited', icon: '🦪', color: '#FFF9F0' }
+        ];
+
+        const STORY_TAGS = ['Love 💗', 'Friendship 👯‍♀️', 'Memories 📸', 'Self-expression ✨', 'Just Cute 🎀'];
+
+        // GLOBAL APP STATE
+        let appState = {
+            activePage: 'home',
+            builder: {
+                step: 1,
+                selectedBase: BASE_OPTIONS[0],
+                selectedCharms: [], // Array of charm objects
+                charmFilter: 'All',
+                selectedStoryTag: 'Love 💗',
+                customNote: ''
+            },
+            cart: [],
+            shopFilter: 'all',
+            shopSearch: '',
+            shopSort: 'recommended'
+        };
+
+        // FORMAT RUPIAH UTILITY
+        function formatIDR(amount) {
+            return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
-        // Render Charm Selector di Builder
-        function renderCharmSelector(filter = 'all') {
-            const grid = document.getElementById('charm-selector-grid');
-            grid.innerHTML = '';
-            const filtered = filter === 'all' ? charmCatalog : charmCatalog.filter(c => c.category === filter);
-
-            filtered.forEach(charm => {
-                const div = document.createElement('div');
-                div.className = 'bg-[#F9F6F0] p-3 rounded-2xl border border-[#EFECE6] flex flex-col justify-between hover:border-charmeGold transition group cursor-pointer';
-                div.onclick = () => addCharmToBuilder(charm);
-                div.innerHTML = `
-                    <div class="h-28 rounded-xl overflow-hidden bg-white mb-2 relative">
-                        <img src="${charm.image}" alt="${charm.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition"></div>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-bold text-charmeDark truncate">${charm.name}</h4>
-                        <p class="text-xs font-semibold text-charmeGold mt-1">${formatRupiah(charm.price)}</p>
-                    </div>
-                    <button class="mt-2 w-full py-1.5 bg-charmeDark text-white text-xs font-medium rounded-lg hover:bg-charmeGold transition flex items-center justify-center gap-1">
-                        <i class="fa-solid fa-plus text-[10px]"></i> Pilih
-                    </button>
-                `;
-                grid.appendChild(div);
-            });
-        }
-
-        function filterCharmSelector(category) {
-            document.querySelectorAll('.charm-filter-btn').forEach(btn => {
-                btn.className = 'charm-filter-btn px-4 py-1.5 rounded-full text-xs font-medium bg-stone-200 text-stone-700 hover:bg-charmeDark hover:text-white transition';
-            });
-            event.target.className = 'charm-filter-btn px-4 py-1.5 rounded-full text-xs font-medium bg-charmeDark text-white transition';
-            renderCharmSelector(category);
-        }
-
-        // Tambah charm ke Tray Builder
-        function addCharmToBuilder(charm) {
-            userCustomCharms.push({ ...charm, uniqueId: Date.now() + Math.random() });
-            updateBuilderUI();
-        }
-
-        // Hapus charm dari Tray Builder
-        function removeCharmFromBuilder(uniqueId) {
-            userCustomCharms = userCustomCharms.filter(c => c.uniqueId !== uniqueId);
-            updateBuilderUI();
-        }
-
-        // Reset Builder
-        function resetBuilder() {
-            userCustomCharms = [];
-            updateBuilderUI();
-        }
-
-        // Update UI Builder Tray & Total
-        function updateBuilderUI() {
-            const tray = document.getElementById('bracelet-tray');
-            const counter = document.getElementById('link-counter');
-            const charmsTotalEl = document.getElementById('builder-charms-total');
-            const grandTotalEl = document.getElementById('builder-grand-total');
-
-            counter.innerText = `${userCustomCharms.length} Charm Dipilih`;
-
-            if (userCustomCharms.length === 0) {
-                tray.innerHTML = `
-                    <div id="empty-tray-msg" class="text-stone-400 text-xs italic m-auto text-center w-full py-8">
-                        Gelangmu masih kosong.<br>Pilih charm di sebelah kanan untuk mulai merangkai!
-                    </div>
-                `;
-                charmsTotalEl.innerText = formatRupiah(0);
-                grandTotalEl.innerText = formatRupiah(150000);
-                return;
+        // NAVIGATION HANDLER
+        function navigateTo(pageId) {
+            appState.activePage = pageId;
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            const targetView = document.getElementById('view-' + pageId);
+            if (targetView) {
+                targetView.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            tray.innerHTML = '';
-            let charmsTotal = 0;
-
-            userCustomCharms.forEach(item => {
-                charmsTotal += item.price;
-                const linkEl = document.createElement('div');
-                linkEl.className = 'relative flex-shrink-0 w-16 h-20 bg-white rounded-xl border border-stone-200 shadow-sm flex flex-col items-center justify-center p-1 group';
-                linkEl.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded-md mb-1">
-                    <span class="text-[9px] font-bold text-charmeDark truncate w-full text-center">${item.name.split(' ')[0]}</span>
-                    <button onclick="removeCharmFromBuilder(${item.uniqueId})" class="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow">
-                        <i class="fa-solid fa-xmark text-[10px]"></i>
-                    </button>
-                `;
-                tray.appendChild(linkEl);
-            });
-
-            charmsTotalEl.innerText = formatRupiah(charmsTotal);
-            const grandTotal = 150000 + charmsTotal;
-            grandTotalEl.innerText = formatRupiah(grandTotal);
+            if (pageId === 'shop') renderShopGrid();
+            if (pageId === 'cart') renderFullCartPage();
+            if (pageId === 'checkout') renderCheckoutSummary();
         }
 
-        // Masukkan Custom Bracelet ke Keranjang
-        function addCustomBraceletToCart() {
-            if (userCustomCharms.length === 0) {
-                showNotification('Pilih minimal 1 charm untuk merancang gelang custom!');
-                return;
-            }
-
-            let charmsDesc = userCustomCharms.map(c => c.name).join(', ');
-            let charmsTotal = userCustomCharms.reduce((sum, c) => sum + c.price, 0);
-            let totalPrice = 150000 + charmsTotal;
-
-            const customProduct = {
-                id: 'custom-' + Date.now(),
-                name: `Custom Italian Bracelet (${userCustomCharms.length} Charms)`,
-                price: totalPrice,
-                image: userCustomCharms[0].image,
-                description: `Rangkaian custom: ${charmsDesc}`,
-                quantity: 1
-            };
-
-            cart.push(customProduct);
-            updateCartBadge();
-            showNotification('Gelang custom berhasil dimasukkan ke keranjang!');
-            userCustomCharms = [];
-            updateBuilderUI();
-            toggleCart();
-        }
-
-        // Render Produk Koleksi ke Grid
-        function renderCollections() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = '';
-
-            collections.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl shadow-sm border border-[#EFECE6] overflow-hidden flex flex-col justify-between hover:shadow-md transition';
-                card.innerHTML = `
-                    <div class="relative overflow-hidden group h-72 bg-stone-100">
-                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/e8ded2/57534e?text=Charme'">
-                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2">
-                            <button onclick="openDetailModal('${product.id}')" class="px-5 py-2.5 bg-white text-charmeDark text-xs font-semibold rounded-full shadow-lg hover:bg-stone-50 transition">Detail</button>
-                        </div>
-                    </div>
-                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-xs uppercase font-semibold text-charmeGold tracking-widest">${product.category}</span>
-                            <h3 class="text-lg font-serif font-bold text-charmeDark mt-1">${product.name}</h3>
-                            <p class="text-base font-semibold text-stone-800 mt-2">${formatRupiah(product.price)}</p>
-                        </div>
-                        <button onclick="addToCartCollection('${product.id}')" class="w-full py-3 bg-charmeDark hover:bg-charmeGold text-white text-xs font-semibold uppercase tracking-wider rounded-xl transition shadow-sm flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-bag-shopping"></i> + Keranjang
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // Tambah Produk Koleksi ke Cart
-        function addToCartCollection(productId) {
-            const product = collections.find(p => p.id === productId);
-            const existing = cart.find(item => item.id === productId);
-
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-
-            updateCartBadge();
-            showNotification(`${product.name} ditambahkan ke keranjang!`);
-        }
-
-        // Toggle Mobile Menu
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
 
-        // Toggle Cart Drawer
-        function toggleCart() {
-            const drawer = document.getElementById('cart-drawer');
-            drawer.classList.toggle('hidden');
-            renderCartItems();
+        // ==========================================
+        // BUILDER LOGIC & INTERACTIVE ENGINE
+        // ==========================================
+        function initBuilder() {
+            renderBaseOptions();
+            renderCharmFilters();
+            renderCharmsCatalog();
+            renderStoryTagOptions();
+            updateBuilderStepUI();
         }
 
-        // Update Cart Badge Counter
-        function updateCartBadge() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cart-count').innerText = totalItems;
-        }
-
-        // Render Cart Items
-        function renderCartItems() {
-            const container = document.getElementById('cart-items');
-            const totalContainer = document.getElementById('cart-total');
-            container.innerHTML = '';
-
-            if (cart.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-16 text-stone-400 space-y-3">
-                        <i class="fa-solid fa-bag-shopping text-4xl text-stone-300"></i>
-                        <p class="text-sm">Keranjang belanja kamu masih kosong.</p>
+        function renderBaseOptions() {
+            const container = document.getElementById('base-options-grid');
+            container.innerHTML = BASE_OPTIONS.map(base => {
+                const isSelected = appState.builder.selectedBase.id === base.id;
+                return `
+                    <div onclick="selectBuilderBase('${base.id}')" class="cursor-pointer border-2 p-5 rounded-2xl transition-all ${isSelected ? 'border-dustyRose bg-blush/20 shadow-md' : 'border-blush/40 hover:border-warmTaupe'} text-center space-y-3">
+                        <div class="w-16 h-12 mx-auto rounded-lg shadow-inner flex items-center justify-center font-bold text-xs" style="background-color: ${base.color}; border: 1px solid ${base.borderColor}; color: ${base.textColor}">
+                            🔗 LINK
+                        </div>
+                        <h4 class="font-serif text-sm text-deepCocoa font-bold">${base.name}</h4>
+                        <p class="text-xs text-dustyRose font-bold">${formatIDR(base.price)}</p>
                     </div>
                 `;
-                totalContainer.innerText = formatRupiah(0);
-                return;
-            }
+            }).join('');
+        }
 
-            let totalPrice = 0;
+        function selectBuilderBase(baseId) {
+            appState.builder.selectedBase = BASE_OPTIONS.find(b => b.id === baseId);
+            renderBaseOptions();
+            updateLivePreview();
+        }
 
-            cart.forEach(item => {
-                totalPrice += item.price * item.quantity;
-                const div = document.createElement('div');
-                div.className = 'flex items-center gap-4 pt-4 first:pt-0';
-                div.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-xl object-cover bg-stone-100 flex-shrink-0">
-                    <div class="flex-1">
-                        <h4 class="text-sm font-serif font-bold text-charmeDark">${item.name}</h4>
-                        <p class="text-xs text-stone-500">${formatRupiah(item.price)} x ${item.quantity}</p>
-                        <div class="flex items-center gap-2 mt-2">
-                            <button onclick="updateQty('${item.id}', -1)" class="w-6 h-6 rounded bg-stone-200 text-stone-700 hover:bg-stone-300 flex items-center justify-center text-xs">-</button>
-                            <span class="text-xs font-semibold">${item.quantity}</span>
-                            <button onclick="updateQty('${item.id}', 1)" class="w-6 h-6 rounded bg-stone-200 text-stone-700 hover:bg-stone-300 flex items-center justify-center text-xs">+</button>
+        function renderCharmFilters() {
+            const categories = ['All', 'Love', 'Friendship', 'Girly', 'Lifestyle', 'Travel', 'Zodiac', 'Limited'];
+            const container = document.getElementById('charm-category-filters');
+            container.innerHTML = categories.map(cat => {
+                const isActive = appState.builder.charmFilter === cat;
+                return `
+                    <button onclick="setCharmFilter('${cat}')" class="px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${isActive ? 'bg-dustyRose text-white font-bold' : 'bg-blush/30 text-deepCocoa hover:bg-blush/60'}">
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function setCharmFilter(cat) {
+            appState.builder.charmFilter = cat;
+            renderCharmFilters();
+            renderCharmsCatalog();
+        }
+
+        function renderCharmsCatalog() {
+            const container = document.getElementById('charms-selection-grid');
+            const filtered = appState.builder.charmFilter === 'All' 
+                ? CHARMS_CATALOG 
+                : CHARMS_CATALOG.filter(c => c.category === appState.builder.charmFilter);
+
+            container.innerHTML = filtered.map(charm => {
+                const countAttached = appState.builder.selectedCharms.filter(c => c.id === charm.id).length;
+                return `
+                    <div class="bg-ivory/60 p-3 rounded-2xl border border-blush/50 text-center space-y-2 relative flex flex-col justify-between">
+                        ${countAttached > 0 ? `<span class="absolute top-1.5 right-1.5 bg-dustyRose text-white text-[10px] w-5 h-5 rounded-full font-bold flex items-center justify-center">${countAttached}</span>` : ''}
+                        <div class="text-2xl py-2">${charm.icon}</div>
+                        <div>
+                            <div class="font-serif text-xs text-deepCocoa font-bold truncate">${charm.name}</div>
+                            <div class="text-[11px] text-dustyRose font-semibold">${formatIDR(charm.price)}</div>
+                        </div>
+                        <div class="flex gap-1 pt-1">
+                            ${countAttached > 0 ? `
+                                <button onclick="removeCharmFromBuilder('${charm.id}')" class="flex-1 py-1 rounded-lg bg-blush/50 text-deepCocoa text-[10px] font-bold hover:bg-blush">-</button>
+                            ` : ''}
+                            <button onclick="addCharmToBuilder('${charm.id}')" class="flex-1 py-1 rounded-lg bg-dustyRose text-white text-[10px] font-bold hover:bg-deepCocoa transition-colors">+ Add</button>
                         </div>
                     </div>
-                    <button onclick="removeItem('${item.id}')" class="text-stone-400 hover:text-red-500 p-2"><i class="fa-solid fa-trash text-sm"></i></button>
                 `;
-                container.appendChild(div);
-            });
-
-            totalContainer.innerText = formatRupiah(totalPrice);
+            }).join('');
         }
 
-        // Update Qty Item di Cart
-        function updateQty(productId, change) {
-            const item = cart.find(i => i.id === productId);
-            if (item) {
-                item.quantity += change;
-                if (item.quantity <= 0) {
-                    cart = cart.filter(i => i.id !== productId);
+        function addCharmToBuilder(charmId) {
+            const charm = CHARMS_CATALOG.find(c => c.id === charmId);
+            if (charm) {
+                appState.builder.selectedCharms.push(charm);
+                document.getElementById('charms-count-badge').innerText = appState.builder.selectedCharms.length;
+                renderCharmsCatalog();
+                updateLivePreview();
+                showToast(`Attached ${charm.name} to bracelet! 💗`);
+            }
+        }
+
+        function removeCharmFromBuilder(charmId) {
+            const index = appState.builder.selectedCharms.findIndex(c => c.id === charmId);
+            if (index > -1) {
+                appState.builder.selectedCharms.splice(index, 1);
+                document.getElementById('charms-count-badge').innerText = appState.builder.selectedCharms.length;
+                renderCharmsCatalog();
+                updateLivePreview();
+            }
+        }
+
+        function renderStoryTagOptions() {
+            const container = document.getElementById('story-tag-options');
+            container.innerHTML = STORY_TAGS.map(tag => {
+                const isSelected = appState.builder.selectedStoryTag === tag;
+                return `
+                    <button onclick="selectStoryTag('${tag}')" class="p-3 rounded-xl text-xs font-bold transition-all border ${isSelected ? 'bg-dustyRose text-white border-dustyRose shadow-sm' : 'bg-ivory/50 text-deepCocoa border-blush/60 hover:bg-blush/30'}">
+                        ${tag}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectStoryTag(tag) {
+            appState.builder.selectedStoryTag = tag;
+            renderStoryTagOptions();
+        }
+
+        // DYNAMIC SVG LIVE PREVIEW OF ITALIAN LINKS
+        function updateLivePreview() {
+            const container = document.getElementById('live-bracelet-canvas');
+            const base = appState.builder.selectedBase;
+            const charms = appState.builder.selectedCharms;
+            
+            // Total links in loop: 14 total
+            const totalLinks = 14;
+            let linksHTML = '';
+
+            for (let i = 0; i < totalLinks; i++) {
+                const attachedCharm = charms[i];
+                if (attachedCharm) {
+                    linksHTML += `
+                        <div onclick="removeCharmFromBuilder('${attachedCharm.id}')" title="Click to remove ${attachedCharm.name}" class="charm-slot cursor-pointer shrink-0 w-11 h-14 rounded-md border-2 shadow-md flex flex-col items-center justify-center relative group" style="background-color: ${attachedCharm.color}; border-color: ${base.borderColor}">
+                            <span class="text-base">${attachedCharm.icon}</span>
+                            <span class="absolute -top-1 -right-1 bg-deepCocoa text-white rounded-full w-4 h-4 text-[9px] items-center justify-center hidden group-hover:flex">✕</span>
+                        </div>
+                    `;
+                } else {
+                    linksHTML += `
+                        <div class="shrink-0 w-10 h-14 rounded-md border shadow-inner flex items-center justify-center opacity-80" style="background-color: ${base.color}; border-color: ${base.borderColor}">
+                            <div class="w-1 h-8 bg-black/10 rounded-full"></div>
+                        </div>
+                    `;
                 }
             }
-            updateCartBadge();
-            renderCartItems();
+
+            container.innerHTML = `<div class="flex items-center gap-1 overflow-x-auto py-2 px-4">${linksHTML}</div>`;
+
+            // Calculate Price
+            const basePrice = base.price;
+            const charmsTotal = charms.reduce((acc, c) => acc + c.price, 0);
+            const total = basePrice + charmsTotal;
+
+            document.getElementById('preview-base-name').innerText = base.name;
+            document.getElementById('preview-charm-count').innerText = charms.length;
+            document.getElementById('preview-total-price').innerText = formatIDR(total);
+
+            renderSummaryPane(total);
         }
 
-        // Hapus Item di Cart
-        function removeItem(productId) {
-            cart = cart.filter(i => i.id !== productId);
-            updateCartBadge();
-            renderCartItems();
+        function renderSummaryPane(total) {
+            const container = document.getElementById('summary-breakdown-card');
+            const base = appState.builder.selectedBase;
+            const charms = appState.builder.selectedCharms;
+            const note = document.getElementById('story-note-input')?.value || 'None';
+
+            container.innerHTML = `
+                <div class="flex justify-between border-b border-blush/40 pb-2">
+                    <span>Bracelet Base (${base.name}):</span>
+                    <span class="font-bold">${formatIDR(base.price)}</span>
+                </div>
+                <div class="space-y-1 border-b border-blush/40 pb-2">
+                    <div class="font-bold text-warmTaupe">Attached Charms (${charms.length}):</div>
+                    ${charms.length === 0 ? '<p class="italic text-warmTaupe">No extra charms attached.</p>' : charms.map(c => `
+                        <div class="flex justify-between pl-2">
+                            <span>${c.icon} ${c.name}</span>
+                            <span>${formatIDR(c.price)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="flex justify-between border-b border-blush/40 pb-2">
+                    <span>Packaging & Story Theme:</span>
+                    <span class="font-bold text-dustyRose">${appState.builder.selectedStoryTag}</span>
+                </div>
+                <div class="flex justify-between font-serif text-base font-bold text-deepCocoa pt-1">
+                    <span>Total Custom Price:</span>
+                    <span class="text-dustyRose">${formatIDR(total)}</span>
+                </div>
+            `;
         }
 
-        // Checkout WhatsApp
-        function checkoutWhatsApp() {
-            if (cart.length === 0) {
-                showNotification('Keranjang kamu masih kosong!');
+        function setBuilderStep(stepNum) {
+            appState.builder.step = stepNum;
+            updateBuilderStepUI();
+        }
+
+        function nextBuilderStep() {
+            if (appState.builder.step < 5) {
+                appState.builder.step++;
+                updateBuilderStepUI();
+            }
+        }
+
+        function prevBuilderStep() {
+            if (appState.builder.step > 1) {
+                appState.builder.step--;
+                updateBuilderStepUI();
+            }
+        }
+
+        function updateBuilderStepUI() {
+            const step = appState.builder.step;
+            
+            // Progress line width
+            const progressPercent = ((step - 1) / 4) * 100;
+            document.getElementById('builder-progress-bar').style.width = `${progressPercent}%`;
+
+            // Step Badges
+            for (let i = 1; i <= 5; i++) {
+                const badge = document.getElementById(`step-badge-${i}`);
+                if (i <= step) {
+                    badge.classList.remove('bg-blush', 'text-deepCocoa');
+                    badge.classList.add('bg-dustyRose', 'text-white');
+                } else {
+                    badge.classList.remove('bg-dustyRose', 'text-white');
+                    badge.classList.add('bg-blush', 'text-deepCocoa');
+                }
+
+                const pane = document.getElementById(`builder-step-${i}`);
+                if (i === step) pane.classList.remove('hidden');
+                else pane.classList.add('hidden');
+            }
+
+            // Buttons visibility
+            const prevBtn = document.getElementById('builder-prev-btn');
+            const nextBtn = document.getElementById('builder-next-btn');
+
+            if (step === 1) prevBtn.classList.add('hidden');
+            else prevBtn.classList.remove('hidden');
+
+            if (step === 5) nextBtn.classList.add('hidden');
+            else nextBtn.classList.remove('hidden');
+
+            updateLivePreview();
+        }
+
+        function addCustomBraceletToCart() {
+            const base = appState.builder.selectedBase;
+            const charms = [...appState.builder.selectedCharms];
+            const charmsTotal = charms.reduce((acc, c) => acc + c.price, 0);
+            const total = base.price + charmsTotal;
+            const note = document.getElementById('story-note-input').value;
+
+            const customItem = {
+                id: 'custom-' + Date.now(),
+                type: 'custom',
+                name: `Custom ${base.name}`,
+                base: base,
+                charms: charms,
+                storyTag: appState.builder.selectedStoryTag,
+                customNote: note,
+                price: total,
+                qty: 1
+            };
+
+            appState.cart.push(customItem);
+            updateCartBadges();
+            showToast('Custom bracelet added to bag! 💗');
+            toggleCartDrawer(true);
+        }
+
+        // ==========================================
+        // SHOP LOGIC & RENDERERS
+        // ==========================================
+        function initShop() {
+            renderFeaturedHomeGrid();
+            renderShopCategoryPills();
+            renderShopGrid();
+        }
+
+        function renderFeaturedHomeGrid() {
+            const container = document.getElementById('home-featured-grid');
+            const featured = PRODUCTS.slice(0, 4);
+            container.innerHTML = featured.map(p => createProductCardHTML(p)).join('');
+        }
+
+        function renderShopCategoryPills() {
+            const categories = [
+                { id: 'all', label: 'All Products' },
+                { id: 'starter', label: 'Starter Sets' },
+                { id: 'gift', label: 'Gift & Bestie Sets' },
+                { id: 'charms', label: 'Standalone Charms' },
+                { id: 'limited', label: 'Limited Drops' }
+            ];
+
+            const container = document.getElementById('shop-category-pills');
+            container.innerHTML = categories.map(cat => {
+                const isActive = appState.shopFilter === cat.id;
+                return `
+                    <button onclick="setShopCategory('${cat.id}')" class="px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors ${isActive ? 'bg-dustyRose text-white font-bold' : 'bg-blush/30 text-deepCocoa hover:bg-blush/60'}">
+                        ${cat.label}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function setShopCategory(catId) {
+            appState.shopFilter = catId;
+            renderShopCategoryPills();
+            filterShopProducts();
+        }
+
+        function filterShopProducts() {
+            const search = document.getElementById('shop-search-input').value.toLowerCase();
+            const sort = document.getElementById('shop-sort-select').value;
+
+            let filtered = PRODUCTS.filter(p => {
+                const matchesCategory = appState.shopFilter === 'all' || p.category === appState.shopFilter;
+                const matchesSearch = p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
+                return matchesCategory && matchesSearch;
+            });
+
+            if (sort === 'price-low') filtered.sort((a,b) => a.price - b.price);
+            if (sort === 'price-high') filtered.sort((a,b) => b.price - a.price);
+
+            renderShopGrid(filtered);
+        }
+
+        function renderShopGrid(items = PRODUCTS) {
+            const container = document.getElementById('shop-products-grid');
+            if (items.length === 0) {
+                container.innerHTML = `<div class="col-span-full py-12 text-center text-warmTaupe text-xs">No products match your search query.</div>`;
+                return;
+            }
+            container.innerHTML = items.map(p => createProductCardHTML(p)).join('');
+        }
+
+        function createProductCardHTML(product) {
+            return `
+                <div class="bg-white rounded-3xl p-5 gold-border shadow-soft flex flex-col justify-between group hover:-translate-y-1 transition-transform">
+                    <div class="space-y-3">
+                        <div class="h-44 bg-ivory rounded-2xl flex items-center justify-center text-5xl relative border border-blush/30">
+                            ${product.badge ? `<span class="absolute top-2 left-2 bg-dustyRose text-white text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">${product.badge}</span>` : ''}
+                            <span class="group-hover:scale-110 transition-transform duration-300">${product.icon}</span>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center gap-1 text-[11px] text-champagne font-bold">
+                                ★ ${product.rating} <span class="text-warmTaupe font-normal">(${product.reviews})</span>
+                            </div>
+                            <h3 class="font-serif text-base text-deepCocoa font-bold line-clamp-1 mt-0.5">${product.name}</h3>
+                            <p class="text-xs text-warmTaupe line-clamp-2 mt-1 leading-relaxed">${product.desc}</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-blush/30 mt-4 flex items-center justify-between">
+                        <span class="font-serif text-base font-bold text-dustyRose">${formatIDR(product.price)}</span>
+                        <div class="flex gap-1">
+                            <button onclick="openQuickView('${product.id}')" class="p-2 rounded-full bg-ivory text-deepCocoa hover:bg-blush/40 transition-colors text-xs" title="Quick View">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                            <button onclick="addStandardProductToCart('${product.id}')" class="px-3 py-1.5 rounded-full bg-dustyRose text-white text-xs font-bold hover:bg-deepCocoa transition-colors">
+                                + Bag
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openQuickView(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            const modalContent = document.getElementById('quick-view-content');
+            modalContent.innerHTML = `
+                <div class="h-64 bg-ivory rounded-2xl flex items-center justify-center text-7xl border border-blush/30">
+                    ${product.icon}
+                </div>
+                <div class="space-y-4 text-xs text-deepCocoa flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <span class="text-[10px] font-bold uppercase tracking-wider bg-blush/40 px-2 py-0.5 rounded text-dustyRose">${product.category}</span>
+                        <h2 class="font-serif text-2xl text-deepCocoa">${product.name}</h2>
+                        <div class="text-lg font-serif font-bold text-dustyRose">${formatIDR(product.price)}</div>
+                        <p class="text-warmTaupe leading-relaxed">${product.desc}</p>
+                        
+                        <div class="space-y-1 pt-2 border-t border-blush/30">
+                            <div><strong>Material:</strong> ${product.material}</div>
+                            <div><strong>Sizing:</strong> ${product.size}</div>
+                        </div>
+                    </div>
+
+                    <button onclick="addStandardProductToCart('${product.id}'); closeQuickViewModal();" class="w-full py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white hover:bg-deepCocoa transition-all shadow-md">
+                        Add To Bag 💗
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('quick-view-modal').classList.remove('hidden');
+        }
+
+        function closeQuickViewModal() {
+            document.getElementById('quick-view-modal').classList.add('hidden');
+        }
+
+        // ==========================================
+        // CART & CHECKOUT LOGIC
+        // ==========================================
+        function addStandardProductToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = appState.cart.find(item => item.type === 'standard' && item.product.id === productId);
+            if (existing) {
+                existing.qty++;
+            } else {
+                appState.cart.push({
+                    id: 'std-' + Date.now(),
+                    type: 'standard',
+                    product: product,
+                    price: product.price,
+                    qty: 1
+                });
+            }
+
+            updateCartBadges();
+            showToast(`Added ${product.name} to bag! 💗`);
+        }
+
+        function updateCartBadges() {
+            const totalQty = appState.cart.reduce((acc, item) => acc + item.qty, 0);
+            const badge = document.getElementById('cart-badge');
+            if (totalQty > 0) {
+                badge.innerText = totalQty;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            renderDrawerCartItems();
+        }
+
+        function toggleCartDrawer(open) {
+            const drawer = document.getElementById('cart-drawer');
+            if (open) {
+                renderDrawerCartItems();
+                drawer.classList.remove('hidden');
+            } else {
+                drawer.classList.add('hidden');
+            }
+        }
+
+        function renderDrawerCartItems() {
+            const container = document.getElementById('cart-drawer-items');
+            if (appState.cart.length === 0) {
+                container.innerHTML = `
+                    <div class="py-12 text-center space-y-3">
+                        <div class="text-4xl">👜</div>
+                        <p class="font-serif text-lg text-deepCocoa">Your story is waiting to be created.</p>
+                        <p class="text-xs text-warmTaupe">Your bag is currently empty.</p>
+                        <button onclick="toggleCartDrawer(false); navigateTo('builder');" class="px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white">
+                            Start Building Now
+                        </button>
+                    </div>
+                `;
+                document.getElementById('cart-drawer-subtotal').innerText = formatIDR(0);
                 return;
             }
 
-            let message = "Halo CHARMÉ Italia, saya ingin memesan produk berikut:\n\n";
-            let total = 0;
+            let subtotal = 0;
+            container.innerHTML = appState.cart.map((item, index) => {
+                const itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
 
-            cart.forEach((item, index) => {
-                let subtotal = item.price * item.quantity;
-                total += subtotal;
-                message += `${index + 1}. ${item.name} (${item.quantity}x) - ${formatRupiah(subtotal)}\n`;
-                if(item.description) message   += `   Catatan: ${item.description}\n`;
-            });
+                if (item.type === 'custom') {
+                    return `
+                        <div class="bg-white p-4 rounded-2xl border border-blush/40 text-xs space-y-2">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[9px] font-bold uppercase tracking-wider bg-champagne/30 text-deepCocoa px-2 py-0.5 rounded">Custom Bracelet</span>
+                                    <h4 class="font-serif text-sm font-bold text-deepCocoa mt-1">${item.name}</h4>
+                                    <p class="text-[11px] text-warmTaupe">Charms (${item.charms.length}): ${item.charms.map(c => c.icon).join(' ')}</p>
+                                    <p class="text-[10px] text-dustyRose italic">Theme: ${item.storyTag}</p>
+                                </div>
+                                <button onclick="removeCartItem(${index})" class="text-warmTaupe hover:text-red-500 text-sm">✕</button>
+                            </div>
+                            <div class="flex justify-between items-center pt-2 border-t border-blush/30 font-bold">
+                                <span>Qty: ${item.qty}</span>
+                                <span class="text-dustyRose">${formatIDR(itemTotal)}</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="bg-white p-4 rounded-2xl border border-blush/40 text-xs flex gap-3 items-center">
+                            <div class="text-2xl">${item.product.icon}</div>
+                            <div class="flex-grow">
+                                <h4 class="font-serif text-xs font-bold text-deepCocoa">${item.product.name}</h4>
+                                <div class="text-dustyRose font-bold mt-0.5">${formatIDR(item.price)}</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="updateQty(${index}, -1)" class="w-6 h-6 rounded-full bg-blush/30 flex items-center justify-center font-bold text-xs">-</button>
+                                <span>${item.qty}</span>
+                                <button onclick="updateQty(${index}, 1)" class="w-6 h-6 rounded-full bg-blush/30 flex items-center justify-center font-bold text-xs">+</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
 
-            message += `\n*Total Pembayaran: ${formatRupiah(total)}*\n\nMohon informasi ketersediaan stok dan rekening pembayaran. Terima kasih!`;
-
-            const encodedMessage = encodeURIComponent(message);
-            const waUrl = `https://wa.me/6281234567890?text=${encodedMessage}`;
-            window.open(waUrl, '_blank');
+            document.getElementById('cart-drawer-subtotal').innerText = formatIDR(subtotal);
         }
 
-        // Modal Detail Produk Koleksi
-        function openDetailModal(productId) {
-            const product = collections.find(p => p.id === productId);
-            const modalContent = document.getElementById('modal-content');
-            modalContent.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="w-full h-72 rounded-2xl object-cover bg-stone-100">
-                <span class="text-xs uppercase font-semibold text-charmeGold tracking-widest">${product.category}</span>
-                <h3 class="text-2xl font-serif font-bold text-charmeDark">${product.name}</h3>
-                <p class="text-lg font-bold text-stone-800">${formatRupiah(product.price)}</p>
-                <p class="text-sm text-stone-600 leading-relaxed">${product.description}</p>
-                <button onclick="addToCartCollection('${product.id}'); closeDetailModal();" class="w-full py-3.5 bg-charmeDark text-white font-semibold rounded-xl hover:bg-charmeGold transition flex items-center justify-center gap-2 text-sm tracking-wide">
-                    <i class="fa-solid fa-bag-shopping"></i> Tambah ke Keranjang
-                </button>
+        function updateQty(index, change) {
+            appState.cart[index].qty += change;
+            if (appState.cart[index].qty <= 0) {
+                appState.cart.splice(index, 1);
+            }
+            updateCartBadges();
+        }
+
+        function removeCartItem(index) {
+            appState.cart.splice(index, 1);
+            updateCartBadges();
+        }
+
+        function renderFullCartPage() {
+            const container = document.getElementById('full-cart-container');
+            if (appState.cart.length === 0) {
+                container.innerHTML = `
+                    <div class="py-12 text-center space-y-4">
+                        <div class="text-5xl">💗</div>
+                        <h2 class="font-serif text-2xl text-deepCocoa">Your story is waiting to be created.</h2>
+                        <p class="text-xs text-warmTaupe max-w-sm mx-auto">Explore our shop or jump into the studio to craft your customized Italian charm bracelet.</p>
+                        <button onclick="navigateTo('builder')" class="px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white shadow-md">
+                            Start Building Now
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            let subtotal = appState.cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            container.innerHTML = `
+                <div class="space-y-4 border-b border-blush/40 pb-6">
+                    ${appState.cart.map((item, index) => `
+                        <div class="bg-ivory p-4 rounded-2xl border border-blush/40 flex justify-between items-center text-xs">
+                            <div class="space-y-1">
+                                <h4 class="font-serif text-sm font-bold text-deepCocoa">${item.type === 'custom' ? item.name : item.product.name}</h4>
+                                <p class="text-warmTaupe text-[11px]">${item.type === 'custom' ? `Attached Charms: ${item.charms.map(c=>c.icon).join(' ')}` : 'Standard Product'}</p>
+                                <span class="font-bold text-dustyRose">${formatIDR(item.price)} x ${item.qty}</span>
+                            </div>
+                            <button onclick="removeCartItem(${index}); renderFullCartPage();" class="text-xs text-red-500 hover:underline">Remove</button>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="text-xs text-warmTaupe">Subtotal:</span>
+                        <div class="font-serif text-2xl text-deepCocoa font-bold">${formatIDR(subtotal)}</div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="navigateTo('shop')" class="px-6 py-3 rounded-full text-xs font-bold text-deepCocoa bg-ivory border border-blush">Continue Shopping</button>
+                        <button onclick="navigateTo('checkout')" class="px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider bg-dustyRose text-white shadow-md">Proceed To Checkout</button>
+                    </div>
+                </div>
             `;
-            document.getElementById('detail-modal').classList.remove('hidden');
         }
 
-        function closeDetailModal() {
-            document.getElementById('detail-modal').classList.add('hidden');
+        function renderCheckoutSummary() {
+            const container = document.getElementById('checkout-summary-items');
+            if (appState.cart.length === 0) {
+                container.innerHTML = `<p class="text-warmTaupe italic">Your cart is currently empty.</p>`;
+                return;
+            }
+
+            container.innerHTML = appState.cart.map(item => `
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-deepCocoa">${item.type === 'custom' ? item.name : item.product.name}</div>
+                        <div class="text-[10px] text-warmTaupe">Qty: ${item.qty}</div>
+                    </div>
+                    <div class="font-bold text-dustyRose">${formatIDR(item.price * item.qty)}</div>
+                </div>
+            `).join('');
+
+            updateCheckoutTotals();
         }
 
-        // Notifikasi Toast
-        function showNotification(text) {
-            const notif = document.createElement('div');
-            notif.className = 'fixed bottom-6 right-6 z-50 bg-charmeDark text-white px-5 py-3.5 rounded-xl shadow-2xl text-sm flex items-center gap-3 border border-stone-700 animate-bounce';
-            notif.innerHTML = `<i class="fa-solid fa-circle-check text-charmeGold text-base"></i> ${text}`;
-            document.body.appendChild(notif);
-            setTimeout(() => notif.remove(), 3000);
+        function updateCheckoutTotals() {
+            const subtotal = appState.cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            const deliveryType = document.querySelector('input[name="delivery"]:checked')?.value || 'regular';
+            let shippingCost = deliveryType === 'express' ? 20000 : 10000;
+            
+            // Free shipping logic for orders >= 150.000
+            let discount = 0;
+            if (subtotal >= 150000) {
+                discount = shippingCost;
+                document.getElementById('free-shipping-discount-row').classList.remove('hidden');
+            } else {
+                document.getElementById('free-shipping-discount-row').classList.add('hidden');
+            }
+
+            const finalTotal = subtotal + shippingCost - discount;
+
+            document.getElementById('checkout-subtotal').innerText = formatIDR(subtotal);
+            document.getElementById('checkout-shipping').innerText = formatIDR(shippingCost);
+            document.getElementById('checkout-final-total').innerText = formatIDR(finalTotal);
         }
 
-        // Inisialisasi saat window load
-        window.onload = function() {
-            renderCharmSelector('all');
-            renderCollections();
+        function handlePlaceOrder(event) {
+            event.preventDefault();
+            if (appState.cart.length === 0) {
+                showToast('Your bag is empty! 💗');
+                return;
+            }
+
+            const name = document.getElementById('checkout-name').value;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            const subtotal = appState.cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            // Populate Order Confirmation Modal
+            const orderSummaryBox = document.getElementById('modal-order-summary');
+            orderSummaryBox.innerHTML = `
+                <div><strong>Customer:</strong> ${name}</div>
+                <div><strong>Order ID:</strong> #CHARME-${Math.floor(100000 + Math.random() * 900000)}</div>
+                <div><strong>Total Items:</strong> ${appState.cart.length}</div>
+                <div><strong>Payment Method:</strong> ${paymentMethod.toUpperCase()}</div>
+                <div><strong>Total Paid:</strong> ${document.getElementById('checkout-final-total').innerText}</div>
+            `;
+
+            if (paymentMethod === 'qris') {
+                document.getElementById('qris-payment-box').classList.remove('hidden');
+            } else {
+                document.getElementById('qris-payment-box').classList.add('hidden');
+            }
+
+            // Clear Cart
+            appState.cart = [];
+            updateCartBadges();
+
+            // Show Confirmation Modal
+            document.getElementById('order-confirmed-modal').classList.remove('hidden');
         }
+
+        function closeOrderModal() {
+            document.getElementById('order-confirmed-modal').classList.add('hidden');
+            navigateTo('home');
+        }
+
+        // TOAST NOTIFICATION UTILITY
+        function showToast(msg) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // ON PAGE INITIALIZATION
+        window.onload = function () {
+            initBuilder();
+            initShop();
+            updateCartBadges();
+        };
     </script>
 </body>
 </html>
-```
-eof
